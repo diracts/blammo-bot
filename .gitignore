@@ -1,0 +1,14 @@
+*.png
+*.csv
+*.txt
+*.log
+*.sqlite
+.vscode
+old
+plots
+__pycache__
+stdout
+stderr
+test.ipynb
+configs
+.DS_Store
