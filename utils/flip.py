@@ -1,9 +1,4 @@
-
-
-
-
 # This module converts normal text into Australian.
-
 
 char_map = {
     'a': 'ɐ',

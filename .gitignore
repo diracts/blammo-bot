@@ -12,3 +12,4 @@ stderr
 test.ipynb
 configs
 .DS_Store
+.mypy_cache
