@@ -25,7 +25,7 @@ logger.addHandler(stream_handler)
 
 
 ONLINE_SIGNAL_FILE_NAME = "online_signal.txt"
-CHANNEL_ONLINE_CHECK_NAME = "SeanDaBlack"
+CHANNEL_ONLINE_CHECK_NAME = "hasanabi"
 CHANNEL_ONLINE_CHECK_INTERVAL = 40  # changed from 20 to 40 to see if it fixes the "max retries exceeded for url" error
 
 
