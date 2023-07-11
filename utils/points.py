@@ -1,21 +1,6 @@
 import pandas as pd
 import random, logging
 
-# from log.loggers.custom_logger import custom_logger
-# logger = custom_logger()
-
-# logging.basicConfig(
-#     level=logging.INFO,
-#     format='%(asctime)s - %(name)s - %(levelname)s : %(message)s',
-#     datefmt='%m/%d/%Y %I:%M:%S %p',
-#     handlers=[
-#         logging.FileHandler('logs.log'),
-#         logging.StreamHandler()
-#     ]
-# )
-# logger = logging.getLogger(__name__)
-
-
 from log.loggers.custom_format import CustomFormatter  # for level colors
 
 logger = logging.getLogger(__name__)
