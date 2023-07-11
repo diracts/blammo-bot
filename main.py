@@ -21,27 +21,12 @@ from utils.scramble import ScrambleData
 from utils.secrets import get_oauth, get_client_id, get_client_secret
 from utils import submit
 from utils import secretcommand
-
 import check_online
 
 # from validate import get_alt_answer, check_string_safety
 # 10 - DEBUG + level 11
 # 11 - all chat messages + level 12
 # 12 - all Bot messages
-
-# from log.loggers.custom_logger import custom_logger   # lmao
-# logger = custom_logger()
-
-# logging.basicConfig(
-#     level=logging.INFO,
-#     format='%(asctime)s - %(name)s - %(levelname)s : %(message)s',
-#     datefmt='%m/%d/%Y %I:%M:%S %p',
-#     handlers=[
-#         logging.FileHandler('logs.log'),
-#         logging.StreamHandler()
-#     ]
-# )
-# logger = logging.getLogger(__name__)
 
 from log.loggers.custom_format import CustomFormatter  # for level colors
 
@@ -463,7 +448,7 @@ class BlammoBot(BaseBot):
 
         questions = trivia.question()
         question, answer, TRIVIA_QID = questions
-        question_stylized = f"Chatting [Trivia] {question} Frenchge TeaTime"
+        question_stylized = f"Chatting [Trivia] {question} Frenchge WineTime"
 
         # >>> record section <<<
         record.new(TRIVIA_QID)
@@ -893,36 +878,6 @@ since new scramble round started."
                 response = f"I have {points.get_points(user)} points."
             await msg.reply(response)
             return
-
-    # @Command('reloadtrivia',
-    #          help='Reloads the trivia database', cooldown=5, permission='admin')
-    # async def cmd_reloadtrivia(msg: Message):
-    #     global trivia
-    #     global timestamps
-
-    #     logger.info(f'{msg.author} called reloadtrivia command')
-    #     trivia.reload()
-    #     add_qid('../blammo-bot-private/trivia.csv', 'trivia')
-    #     try:
-    #         timestamps.save()
-    #     except Exception as e:
-    #         logger.error(f'Could not save timestamps: {e}')
-    #     await msg.reply('MrDestructoid Reloaded trivia database')
-
-    # @Command('reloadscramble', help='Reloads scramble database', cooldown=5,
-    #         permission='admin')
-    # async def cmd_reloadscramble(msg: Message):
-    #     global scramble
-    #     global timestamps
-
-    #     logger.info(f'{msg.author} called reloadscramble command')
-    #     scramble.reload()
-    #     add_qid('../blammo-bot-private/scramble.csv', 'scramble')
-    #     try:
-    #         timestamps.save()
-    #     except Exception as e:
-    #         logger.error(f'Could not save timestamps: {e}')
-    #     await msg.reply('MrDestructoid Reloaded scramble database')
 
     async def _reload_trivia(msg: Message, verbose=True, save_timestamps=True):
         global trivia
@@ -1450,101 +1405,6 @@ since new scramble round started."
             await msg.reply(f"FeelsDankMan TeaTime something is broken...")
             return
 
-        # while True: # loop until the secretcommand returns False
-        #     await asyncio.sleep(0.1)        # safety
-        #     out, n = await secretcommand.loop(msg, 0)
-        #     if out == False:
-        #         return
-        #     await msg.reply(out, as_twitch_reply=True)
-
-        # time1 = random.randint(15, 200)
-        # time2 = random.randint(3, 15)
-
-        # # https://youtu.be/2k0SmqbBIpQ
-        # responses = {
-        #     0: 'https://youtu.be/hycF9IH55Lk',
-        #     1: f'🫵 ICANT @{msg.author}',
-        #     2: f'Susge @{msg.author}',
-        #     3: f'FeelsDankMan TeaTime hold on ...',
-        #     4: f'...',
-        #     5: '',
-        #     6: '',
-        #     7: '',
-        #     8: '',
-        #     9: '',
-        #     10: '',
-        #     11: '',
-        #     12: '',
-        #     13: '',
-        #     14: '',
-        #     15: '',
-        #     16: f'ReallyMad Don\'t try the secret command! You won\'t find anything.',
-        #     17: f'ReallyMad Don\'t try the secret command! You won\'t find anything.',
-        #     18: f'ReallyMad Stop trying the secret command! You won\'t find anything.',
-        #     19: f'https://youtu.be/vOvfXCGKXbI',
-        #     20: f'KEKW https://youtu.be/WDiB4rtp1qw',
-        #     21: '!betel',
-        #     22: '!quote',
-        #     23: '!cock',
-        #     24: '!sus',
-        #     25: '!pog',
-        #     # 26: '!rr peepoHas 🪄Blammo',
-        #     27: '!dadjoke',
-        #     28: '!fight @Fossabot',
-        #     29: f'!fight @{msg.author}',
-        #     30: '!fursona',
-        #     31: f'widepeepoHappy',
-        #     32: f'DinoFrogDisco https://youtu.be/XMCVCJ8ZuPs',
-        #     33: f'https://youtu.be/GQ9UI2h5ipY',
-        #     34: f'Salute https://youtu.be/YYEAmK4NCd8',
-        #     35: f'Jamgie https://youtu.be/0_04Z-7kZ9E',
-        #     36: f'LookUp',
-        #     37: f'LookUp',
-        #     38: f'@{msg.author} ReallyMad Stop trying the secret command!',
-        #     39: f'@{msg.author} Grrr Stop trying the secret command!',
-        #     40: f'KEKL https://youtu.be/Fkk9DI-8el4',
-        #     41: f'PauseChamp 🎁',
-        #     42: f'Joel https://youtu.be/YAgJ9XugGBo',
-        #     43: f'https://youtu.be/aNMKigmGreI',
-        #     44: f'peepoRun https://youtu.be/6sLSArQ8Pvw',
-        #     45: f'MEOW https://youtu.be/0fekTeVXMCM',
-        #     46: f'HYPERNODDERS https://youtu.be/xbPwaAFHDG8',
-        #     47: f'https://youtu.be/l_XxcTJGWtM',
-        #     48: f'https://youtu.be/Sd4Qpf8Y6DE',
-        #     49: f'https://youtu.be/vLe_BZ1mo3I',
-        # }
-
-        # chosen_response = random.randint(0, len(responses)-1)
-
-        # logger.info(f'{msg.author} ran #secretcommand and got response {chosen_response}: {responses[chosen_response]}')
-
-        # if responses[chosen_response] == '':
-        #     return
-
-        # if chosen_response in (4, 16, 17, 23, 24, 25):
-        #     await asyncio.sleep(time1)
-
-        # if chosen_response in (18, 32, 33, 35):
-        #     await asyncio.sleep(time2)
-
-        # await msg.reply(responses[chosen_response], as_twitch_reply=True)
-
-        # if chosen_response not in (31, 41):
-        #     return
-        # else:
-        #     await asyncio.sleep(time1)
-        #     random_gift = random.randint(2, 20)
-        #     points.add_points(msg.author, random_gift)
-        #     await msg.reply(f'peepoHas FBCatch 🎁 Here\'s {random_gift} points for you', as_twitch_reply=True)
-
-    # @Command('execute', permission='admin', help='Type a math equation and get the answer')
-    # async def cmd_execute(msg: Message):
-    #     content = msg.content.replace('#execute ', '')
-    #     if 'rm ' in content or 'del ' in content:
-    #         return
-    #     answer = eval(content)
-    #     await msg.reply(answer, as_twitch_reply=True)
-
     @Command(
         "silentecho",
         permission="admin",
@@ -1630,118 +1490,6 @@ since new scramble round started."
         if msg.author == "diraction":
             REPLY_NEXT = msg.content
             logger.info(f"added message to REPLY_NEXT queue: {msg.content}")
-
-
-# def check_stream_online(
-#         channel: str = 'hasanabi',
-#         verbose: bool = False,
-#     ):
-#     """Is the stream online?
-
-#     Args:
-#         channel (str, optional): channel to check. Defaults to 'hasanabi'.
-
-#     Returns:
-#         bool: True if stream is online, False if stream is offline
-#     """
-#     body = {
-#         'client_id': get_client_id(),
-#         'client_secret': get_client_secret(),
-#         "grant_type": 'client_credentials'
-#     }
-#     r = requests.post('https://id.twitch.tv/oauth2/token', body)
-#     #data output
-#     keys = r.json()
-#     headers = {
-#         'Client-ID': get_client_id(),
-#         'Authorization': 'Bearer ' + keys['access_token']
-#     }
-#     stream = requests.get('https://api.twitch.tv/helix/streams?user_login=' + channel, headers=headers)
-#     stream_data = stream.json()
-#     if len(stream_data['data']) == 1:
-#         if verbose:
-#             print(
-#                 channel + ' is live: ' + stream_data['data'][0]['title'] +
-#                 ' playing ' + stream_data['data'][0]['game_name']
-#             )
-#         logger.debug(f'{channel} is live.')
-#         return True
-#     else:
-#         logger.debug(f'{channel} is not live.')
-#         if verbose:
-#             print(channel + ' is not live')
-#         return False
-
-
-# def online_signal_file_exists() -> bool:
-#     """Does the online signal file exist?
-
-#     Returns:
-#         bool: True if online signal file exists, False if it does not
-#     """
-#     try:
-#         status = os.path.isfile(ONLINE_SIGNAL_FILE_NAME)
-#     except Exception as e:
-#         logger.critical(f'Exception checking if online signal file exists: {e}')
-#         sys.exit(1)
-#     return status
-
-
-# async def check_loop():
-#     while True:
-#         await asyncio.sleep(CHANNEL_ONLINE_CHECK_INTERVAL)
-#         try:
-#             # is_online = check_stream_online()
-#             is_online = True
-#         except Exception as e:
-#             logger.critical(f'Exception checking if stream is online: {e}. Cannot verify stream status, so exiting program.')
-#             sys.exit(1)
-
-#         sig_file_exists = online_signal_file_exists()   # Does the "stream is online" signal file exist?
-
-#         if is_online and sig_file_exists:
-#             # Stream is online and online signal file exists. This is the expected state.
-#             logger.debug(f'Stream is online and online signal file exists.')
-#         elif is_online and not sig_file_exists:
-#             # Stream is online but online signal file does not exist. Need to create signal file.
-#             logger.info(f'Stream now online. Sleeping bot.')
-#             try:
-#                 open(ONLINE_SIGNAL_FILE_NAME, 'w').close()
-#                 logger.debug('Created online signal file.')
-#             except Exception as e:
-#                 logger.critical(f'Exception creating online signal file: {e}. Exiting program.')
-#                 sys.exit(1)
-#         elif not is_online and sig_file_exists:
-#             # Stream is offline but online signal file exists. Need to remove signal file.
-#             logger.info(f'Stream now offline. Waking bot.')
-#             try:
-#                 os.remove(ONLINE_SIGNAL_FILE_NAME)
-#                 logger.debug('Removed online signal file.')
-#             except Exception as e:
-#                 logger.critical(f'Exception removing online signal file: {e}. Exiting program.')
-#                 sys.exit(1)
-#         elif not is_online and not sig_file_exists:
-#             # Stream is offline and the online signal file does not exist. This is the expected state.
-#             logger.debug(f'Stream is offline and online signal file does not exist.')
-#         else:
-#             # This should never happen.
-#             logger.critical(f'Unexpected state: is_online={is_online}, sig_file_exists={sig_file_exists}. Exiting program.')
-#             sys.exit(1)
-
-
-# async def program():
-#     global STREAM_ONLINE
-
-#     # bot_task = asyncio.create_task(BlammoBot().run())
-#     # bot_task = asyncio.create_task(BlammoBot().run())
-
-
-#     bot_task = BlammoBot().run_in_async_task()
-#     # stream_check_task = print_every_5_seconds()
-
-#     await asyncio.gather(bot_task, stream_check_task)
-
-# await asyncio.gather(BlammoBot().run(), check_stream_online())
 
 
 if __name__ == "__main__":

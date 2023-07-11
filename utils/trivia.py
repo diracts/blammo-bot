@@ -1,7 +1,6 @@
 import pandas as pd
 import logging, random
 
-
 from log.loggers.custom_format import CustomFormatter  # for level colors
 
 logger = logging.getLogger(__name__)

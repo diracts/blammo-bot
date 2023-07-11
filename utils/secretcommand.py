@@ -166,7 +166,7 @@ async def run(msg: Message, points: PointData):
 
     await msg.reply(response_text, as_twitch_reply=True)
 
-    if chosen_response not in (31, 41):
+    if chosen_response not in (3, 31, 41):
         return
     else:
         await asyncio.sleep(time1)
