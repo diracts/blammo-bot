@@ -20,11 +20,8 @@ stream_handler.setFormatter(CustomFormatter())
 logger.addHandler(file_handler)
 logger.addHandler(stream_handler)
 
-
 # TODO: Swich from using Pandas to using builtin dict functionality for
 #       performance boost.
-
-
 # TODO: use RegEx to look for features in these strings.
 
 
@@ -68,7 +65,7 @@ def fuzzy_check(row):
 class TriviaData:
     def __init__(
         self,
-        path="trivia.csv",
+        path="../blammo-bot-private/trivia.csv",
         allow_load=True,  # use False when testing or anticipating unsafe behavior
     ):
         self.path = path
@@ -120,7 +117,10 @@ class TriviaData:
                     found_valid = True
             else:
                 q_df.to_csv(
-                    "rejected_questions.csv", mode="a", header=False, index=False
+                    "../blammo-bot-private/rejected_questions.csv",
+                    mode="a",
+                    header=False,
+                    index=False,
                 )
                 hbar = "=" * 81
                 logger.info(f"{hbar}\nQuestion disabled, trying again...")

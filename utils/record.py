@@ -1,21 +1,6 @@
 import logging, random, os, sys, time, datetime
 import pandas as pd
 
-# from log.loggers.custom_logger import custom_logger
-# logger = custom_logger()
-
-# logging.basicConfig(
-#     level=logging.INFO,
-#     format='%(asctime)s - %(name)s - %(levelname)s : %(message)s',
-#     datefmt='%m/%d/%Y %I:%M:%S %p',
-#     handlers=[
-#         logging.FileHandler('logs.log'),
-#         logging.StreamHandler()
-#     ]
-# )
-# logger = logging.getLogger(__name__)
-
-
 from log.loggers.custom_format import CustomFormatter  # for level colors
 
 logger = logging.getLogger(__name__)
@@ -33,7 +18,6 @@ stream_handler.setFormatter(CustomFormatter())
 
 logger.addHandler(file_handler)
 logger.addHandler(stream_handler)
-
 
 # The purpose of this module is to allow the bot to record interesting data
 # about how people are answering questions.
@@ -94,10 +78,6 @@ class Record:
             "question_string",
             "answer_string",
         ]
-
-    # def _set_log_level(self, loglevel) -> None:
-    #     # set the log level
-    #     logger.setLevel(loglevel)
 
     def _get_row_number(self, qid: str) -> int:
         # look in the buffer dataframe for the row with the given qid
@@ -189,7 +169,6 @@ class Record:
         else:
             raise ValueError("Invalid qid")
 
-        # new.to_csv('test.csv', index=False, header=False, mode='a')
         self._write_to_buffer(new)
 
     def add_outcome(self, qid: str, outcome: str) -> None:

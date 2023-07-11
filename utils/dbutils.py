@@ -5,17 +5,6 @@ import numpy as np
 # The purpose of this module is to provide basic function to manimpulate the
 # databases.
 
-# logging.basicConfig(
-#     level=logging.INFO,
-#     format='%(asctime)s - %(name)s - %(levelname)s : %(message)s',
-#     datefmt='%m/%d/%Y %I:%M:%S %p',
-#     handlers=[
-#         logging.FileHandler('logs.log'),
-#         logging.StreamHandler()
-#     ]
-# )
-# logger = logging.getLogger(__name__)
-
 
 from log.loggers.custom_format import CustomFormatter  # for level colors
 

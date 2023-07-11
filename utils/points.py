@@ -20,11 +20,8 @@ logger.addHandler(file_handler)
 logger.addHandler(stream_handler)
 
 
-path = "user_data.csv"
-
-
 class PointData:
-    def __init__(self, path="user_data.csv"):
+    def __init__(self, path="../blammo-bot-private/user_data.csv"):
         self.path = path
         self.df = pd.read_csv(path, index_col=False, header=0)
 

@@ -111,7 +111,7 @@ class BlammoBot(BaseBot):
     REPLY_NEXT = ""
 
     timestamps = Timestamps()
-    record = Record("record_data.csv")
+    record = Record("../blammo-bot-private/record_data.csv")
     points = PointData()
     trivia = TriviaData()
     scramble = ScrambleData()
@@ -902,7 +902,7 @@ since new scramble round started."
 
     #     logger.info(f'{msg.author} called reloadtrivia command')
     #     trivia.reload()
-    #     add_qid('trivia.csv', 'trivia')
+    #     add_qid('../blammo-bot-private/trivia.csv', 'trivia')
     #     try:
     #         timestamps.save()
     #     except Exception as e:
@@ -917,7 +917,7 @@ since new scramble round started."
 
     #     logger.info(f'{msg.author} called reloadscramble command')
     #     scramble.reload()
-    #     add_qid('scramble.csv', 'scramble')
+    #     add_qid('../blammo-bot-private/scramble.csv', 'scramble')
     #     try:
     #         timestamps.save()
     #     except Exception as e:
@@ -930,7 +930,7 @@ since new scramble round started."
 
         logger.info(f"{msg.author} called reload trivia command")
         trivia.reload()
-        add_qid("trivia.csv", "trivia")
+        add_qid("../blammo-bot-private/trivia.csv", "trivia")
         if save_timestamps:
             try:
                 timestamps.save()
@@ -945,7 +945,7 @@ since new scramble round started."
 
         logger.info(f"{msg.author} called reload scramble command")
         scramble.reload()
-        add_qid("scramble.csv", "scramble")
+        add_qid("../blammo-bot-private/scramble.csv", "scramble")
         if save_timestamps:
             try:
                 timestamps.save()
