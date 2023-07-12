@@ -25,7 +25,7 @@ Again, the code is extremely messy right now and if you roast me, then L nerd ge
 - add test cases like i was supposed to a long time ago lmao
 - general: plan out and follow a better structure for the entire project
 - quick: create smart cooldown function and apply it to #roulette, #points, #submit, etc. to prevent intentional spamming
-      - smart cooldown should keep track of how many commands a user has run in the recent past and prevent them from running the command again if they exceed some N number within a fixed T time window
+-       smart cooldown should keep track of how many commands a user has run in the recent past and prevent them from running the command again if they exceed some N number within a fixed T time window
 
 
 
