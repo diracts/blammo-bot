@@ -22,6 +22,8 @@ Again, the code is extremely messy right now and if you roast me, then L nerd ge
 - make timestamps system more comprehensive and robust
 - general: integrate custom functions with original framework better
 - general: remove or disable unused functionality from original bot framework
+- add test cases like i was supposed to a long time ago lmao
+- general: plan out and follow a better structure for the entire project
 
 
 
