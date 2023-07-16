@@ -75,8 +75,6 @@ class TriviaData:
         else:
             self.df = None
 
-        self.loglevel = logging.INFO
-
     # def _val_question(self, : str):
     #     # returns a string that is valid for the csv file
     #     if string
