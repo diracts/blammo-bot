@@ -99,8 +99,8 @@ class BlammoBot(BaseBot):
     TRIVIA_QID = ""
     SCRAMBLE_QID = ""
     silent_cooldown = {
-        "trivia": 17,
-        "scramble": 20,
+        "trivia": 10,
+        "scramble": 10,
     }
     REPLY_NEXT = ""
 
