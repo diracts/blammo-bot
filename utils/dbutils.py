@@ -82,7 +82,14 @@ def add_qid(fname: str, game_type: str):
         raise ValueError(f"Invalid game type: {game_type}")
 
     for i, qid in enumerate(df["qid"]):
-        if len(qid) == 0:  # TODO: Verify that no more issues are happening here
+        # if qid is empty string or not a string, not a float, or not an int
+        if qid == "" or any(
+            (
+                not isinstance(qid, float),
+                not isinstance(qid, int),
+                not isinstance(qid, str),
+            )
+        ):  # TODO: Verify that no more issues are happening here
             df.at[i, "qid"] = game_prefix + str(rand_with_N_digits(10))
 
     df = _replace_duplicates(df, game_type)
