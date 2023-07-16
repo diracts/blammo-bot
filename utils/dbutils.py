@@ -69,6 +69,7 @@ def add_qid(fname: str, game_type: str):
 
     # load scramble or trivia csv
     df = _load_csv(fname)
+    # create qid column if it doesn't exist
     if "qid" not in df.columns:
         df["qid"] = ["" for _ in range(len(df))]
 
@@ -81,7 +82,7 @@ def add_qid(fname: str, game_type: str):
         raise ValueError(f"Invalid game type: {game_type}")
 
     for i, qid in enumerate(df["qid"]):
-        if qid == "":
+        if len(qid) == 0:  # TODO: Verify that no more issues are happening here
             df.at[i, "qid"] = game_prefix + str(rand_with_N_digits(10))
 
     df = _replace_duplicates(df, game_type)

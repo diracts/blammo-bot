@@ -1,4 +1,13 @@
-import sys, os, random, time, logging, urllib3, json, requests, datetime, signal
+import sys
+import os
+import random
+import time
+import logging
+import urllib3
+import json
+import requests
+import datetime
+import signal
 import re
 from pathlib import Path
 from twitchbot import BaseBot
