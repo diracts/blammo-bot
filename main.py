@@ -662,7 +662,7 @@ since new scramble round started."
         # time since roulette cmd last run
         delta = datetime.datetime.now() - timestamps.read("roulette_cmd")
         if delta <= datetime.timedelta(seconds=ROULETTE_COOLDOWN):
-            logger.debug(f"Roulette command blocked -- in silent cooldown.")
+            logger.debug("Roulette command blocked -- in silent cooldown.")
             return
 
         # TODO: double spaces cause error at wager[-1] --> fix this
@@ -763,18 +763,24 @@ since new scramble round started."
             return
 
         # Example: #give Diraction 10
+        #           _    arg1      arg2
         [_, arg1, arg2] = split_msg
 
-        sender = msg.author
-        receiver = arg1.split("@")[-1]  # recipient
-        transfer_amount = arg2
+        sender: str = msg.author
+        receiver: str = arg1.split("@")[-1]  # recipient
+        transfer_amount: str = arg2
 
-        if _check_all_alphanumeric(receiver) == False:
+        if _check_all_alphanumeric(receiver) is False:
             logger.warning("Invalid recipient: alphanumeric")
             return
 
         if receiver.isdigit():
             logger.warning("Invalid recipient: digit")
+            return
+
+        if sender.lower() == receiver.lower():
+            logger.info(f"{sender} just tried to give themselves {transfer_amount}")
+            await msg.reply(f"🫵 ICANT @{msg.author} It didn't work.")
             return
 
         initial_amount = points.get_points(sender) + points.get_points(receiver)
