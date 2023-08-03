@@ -280,10 +280,12 @@ class BlammoBot(BaseBot):
             self.logmsg(f"Chat #{msg.channel.name} ({msg.author}) {msg.content}")
 
         if "lekw" in msg.content.lower():
-            await msg.reply("LEKW ✊")
-            logger.info(
-                f"{msg.author} triggered LEKW response with message: {msg.content}"
-            )
+            do_reply = random.choices([True, False], [0.25, 0.75])
+            if do_reply is True:
+                await msg.reply("LEKW ✊")
+                logger.info(
+                    f"{msg.author} triggered LEKW response with message: {msg.content}"
+                )
 
         if REPLY_NEXT != "":
             reply_next_copy = REPLY_NEXT
