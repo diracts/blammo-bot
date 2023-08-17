@@ -838,6 +838,96 @@ since new scramble round started."
             return
 
     @Command(
+        "take",
+        help="Take some points from another user Evilge",
+        syntax="#take <user> <amount>",
+        aliases=["steal", "defraud"],
+    )
+    async def cmd_take(msg: Message):
+        global points
+        global timestamps
+
+        split_msg = msg.content.split(" ")
+        if len(split_msg) != 3:
+            logger.warning(f"Invalid #take syntax from message: {msg.content}")
+            return
+
+        # Example: #take Diraction 10
+        #           _    arg1      arg2
+        [_, arg1, arg2] = split_msg
+
+        sender: str = msg.author
+        receiver: str = arg1.split("@")[-1]  # recipient
+        transfer_amount: str = arg2
+
+        if _check_all_alphanumeric(receiver) is False:
+            logger.warning("Invalid recipient: alphanumeric")
+            return
+
+        if receiver.isdigit():
+            logger.warning("Invalid recipient: digit")
+            return
+
+        if sender.lower() == receiver.lower():
+            logger.info(f"{sender} just tried to take points from themselves {transfer_amount}")
+            await msg.reply(f"🫵 Stare @{msg.author} You're going to jail for laundering BlammoPoints.")
+            return
+
+        initial_amount = points.get_points(sender) + points.get_points(receiver)
+        if not transfer_amount.isdigit():
+            logger.warning("Invalid amount to take")
+            return
+
+        transfer_amount = int(transfer_amount)
+
+       
+        
+        # check if the "receiver" (theft victim) has enough points
+        if points.get_points(receiver) < transfer_amount:
+            await msg.reply(
+                f"@{msg.author} Shrug You can't take more points than @{receiver} has. Try again Evilge"
+            )
+            return
+
+        outcome = points.transfer(receiver, sender, transfer_amount)
+        if outcome == "success":
+            logger.debug("Successfully transferred points")
+            logger.debug(f"transfered {transfer_amount} from {receiver} to {sender}")
+            await msg.reply(f"Evilge {transfer_amount} pts yoinked from @{receiver} by @{sender}")
+            return
+        elif outcome == "not enough points":
+            await msg.reply(
+                f"@{msg.author} Shrug You can't take more points than @{receiver} has. Try again Evilge"
+            )
+            return
+        elif outcome == "invalid amount":
+            logger.warning(f"Invalid amount to give: {transfer_amount}]")
+            logger.debug(f"thief: {sender}")
+            logger.debug(f"victim: {receiver}")
+            return
+        elif outcome == "cannot transfer to self":
+            logger.warning(f"{sender} tried to steal from themselves")
+            return
+        elif outcome == "negative points":
+            logger.warning(f"{sender} or {receiver} has negative point balance")
+            return
+        elif outcome == "balance mismatch":
+            logger.warning(f"Balance mismatch, but reverted successfully")
+            return
+        elif outcome == "balance mismatch and could not revert":
+            msg.reply(f"DinkDonk @Diraction check console logs monkaW")
+            logger.warning(f"Balance mismatch and could not revert")
+            logger.debug(f"transfered {transfer_amount} from {receiver} to {sender}")
+            logger.debug(f"initial amount: {initial_amount}")
+            logger.debug(
+                f"final amount: {points.get_points(sender) + points.get_points(receiver)}"
+            )
+            return
+        else:
+            logger.warning(f"Unknown outcome: {outcome}")
+            return
+    
+    @Command(
         "submit",
         help="Submit a trivia question+answer or a scramble word. Do #submit help for more.",
     )
