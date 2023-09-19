@@ -151,9 +151,9 @@ async def check_loop():
                     sys.exit(1)
                 else:
                     logger.warning(
-                        f"Exception checking if stream is online: {e}. Retrying in 5 seconds. Attempt {attempts}/{MAX_ATTEMPTS}."
+                        f"Exception checking if stream is online: {e}. Retrying in 15 seconds. Attempt {attempts}/{MAX_ATTEMPTS}."
                     )
-                    await asyncio.sleep(5)
+                    await asyncio.sleep(15)
 
         sig_file_exists = (
             online_signal_file_exists()
