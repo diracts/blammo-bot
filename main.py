@@ -720,7 +720,7 @@ since new scramble round started."
             if t == EMOTE_SCRAMBLE_TIMEOUT and emote_scramble_started is True:
                 await msg.reply(
                     '[Emote Scramble] No one answered correctly. FeelsBadMan '
-                    f'The word was: " {emote_scramble_word["unscrambled_emote_code"]} "'
+                    f'The emote was: " {emote_scramble_word["unscrambled_emote_code"]} "'
                 )
                 emote_scramble_started = False
                 return  # TODO: is break or return better here?
