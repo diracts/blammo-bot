@@ -13,4 +13,5 @@ test.ipynb
 configs
 .DS_Store
 .mypy_cache
-stderr.log.1
+stderr.log.*
+stdout.log.*

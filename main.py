@@ -459,7 +459,7 @@ class BlammoBot(BaseBot):
 
         questions = trivia.question()
         question, answer, TRIVIA_QID = questions
-        question_stylized = f"Chatting [Trivia] {question} Frenchge WineTime"
+        question_stylized = f"Chatting [Trivia] {question} FeelsPumpkinMan WineTime"
 
         # >>> record section <<<
         record.new(TRIVIA_QID)

@@ -304,7 +304,7 @@ async def submit(msg: Message) -> str | bool:
     }
 
     MAX_ANSWER_LENGTH: int = 50
-    MAX_WORD_LENGTH: int = 30
+    MAX_WORD_LENGTH: int = 25
 
     if game == "trivia" and len(answer) > 50:
         logger.warning(

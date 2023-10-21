@@ -24,8 +24,7 @@ Again, the code is extremely messy right now and if you roast me, then L nerd ge
 - general: remove or disable unused functionality from original bot framework
 - add test cases like i was supposed to a long time ago lmao
 - general: plan out and follow a better structure for the entire project
-- quick: create smart cooldown function and apply it to #roulette, #points, #submit, etc. to prevent intentional spamming
--       smart cooldown should keep track of how many commands a user has run in the recent past and prevent them from running the command again if they exceed some N number within a fixed T time window
+- quick: create smart cooldown function and apply it to #roulette, #points, #submit, etc. to prevent intentional spamming (smart cooldown should keep track of how many commands a user has run in the recent past and prevent them from running the command again if they exceed some N number within a fixed T time window)
 - ISSUE: in database health utils, make functions to detect the following bad conditions:
     - failed git merge artifacts (<<<<<<<, >>>>>>>, HEAD, =======, etc.) (do not attempt to resolve, just provide warning and let a human fix it)
     - duplicate questions, duplicate users in user_data, duplicate scramble questions
@@ -35,6 +34,10 @@ Again, the code is extremely messy right now and if you roast me, then L nerd ge
     - for scramble databse, add colums "date added", "date modified" (similar situation as trivia)
     - for user_data, add columns "date added", "date modified"
     - add date time info for submission and event logs
+- TODO: Figure out some way to interact with supervisorctl and trigger a restart from chat command
+    - hacky idea: restart.sh; thru python launch shell to run restart.sh with supervisorctl restart blammobot after 1 second delay
+- TODO: fix issue with no log file while running (ex: log file was moved for archive) and no new log file is created (specifically for logs.log, but may also be happening with other log files)
+- TODO: set up auto log file archiving
 
 
 ## Contributing
