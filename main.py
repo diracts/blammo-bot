@@ -291,8 +291,6 @@ class BlammoBot(BaseBot):
         # if not self.stream_online and 'toggletimetest' in msg.content and msg.author == 'diraction':
         #     self.stream_online = True
 
-        self.stream_online = False
-        self.stream_online_prev = False
         if self.stream_online == True and self.stream_online_prev == False:
             await msg.reply(f"Bedge 💤 honk shoo Bedge 💤 mimimimi")
             logger.info(
