@@ -28,7 +28,7 @@ def safe_scramble_word(word: str) -> str:
     for _ in range(MAX_ATTEMPTS):
         random.shuffle(chars)
         scrambled_word = "".join(chars)
-        if scrambled_word != word:
+        if scrambled_word.lower() != word.lower():
             return scrambled_word
 
     raise ScrambleAttemptsExceededException
