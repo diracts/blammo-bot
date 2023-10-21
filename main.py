@@ -12,7 +12,7 @@ import re
 from pathlib import Path
 from twitchbot import BaseBot
 from twitchbot import event_handler, Event, Command, Message, Channel, PollData, get_bot
-from twitchbot.config import get_nick, get_oauth, get_client_id, get_client_secret
+from twitchbot.config import get_nick, get_oauth, get_client_id
 
 # from trivia import trivia
 import asyncio
@@ -27,6 +27,7 @@ from utils.record import Record
 from utils.points import PointData
 from utils.trivia import TriviaData
 from utils.scramble import ScrambleData
+from utils.emote_scramble import EmoteScrambleData, FailedToGetEmoteScrambleWord
 from utils.secrets import get_oauth, get_client_id, get_client_secret
 from utils import submit
 from utils import secretcommand
@@ -85,15 +86,23 @@ class BlammoBot(BaseBot):
     global _check_all_alphanumeric
     global _reload_trivia
     global _reload_scramble
+    global _reload_escramble
     global _reload_secretcommand
 
     global scramble  # trivia equivalent: trivia
     global scramble_word  # trivia equivalent: questions  (scrambled, unscrambled)
     global scramble_started  # trivia equivalent: trivia_started
 
+    global emote_scramble
+    global emote_scramble_started
+    global emote_scramble_word
+
     questions = None
+    scramble_word = None
+    emote_scramble_word = None
     trivia_started = False
     scramble_started = False
+    emote_scramble_started = False
     COMMAND_SHUTDOWN = False
     restart_scheduled = False
     shutdown_scheduled = False
@@ -102,6 +111,7 @@ class BlammoBot(BaseBot):
     silent_cooldown = {
         "trivia": 10,
         "scramble": 10,
+        "emote_scramble": 10,
     }
     REPLY_NEXT = ""
 
@@ -110,6 +120,7 @@ class BlammoBot(BaseBot):
     points = PointData()
     trivia = TriviaData()
     scramble = ScrambleData()
+    emote_scramble = EmoteScrambleData(user_id=207813352)  # Hardcoded to Hasan's user ID for now
 
     def logmsg(self, msg: str):
         now = datetime.datetime.now()
@@ -166,6 +177,18 @@ class BlammoBot(BaseBot):
             return False  # any message with more 5 or more words cannot be the correct answer
         out = answer in words
         logger.log(7, f"[Scramble] answer ({answer}) in word list: {out}")
+        return out
+
+    def _check_emote_scramble_guess(self, msg: Message) -> bool:
+        global emote_scramble_word
+
+        words = str(msg.content).split(" ")
+        words = [w for w in words if w != ""]
+        logger.log(7, f"[Emote Scramble] word in chat message being checked: {words}")
+        if len(words) >= 5:  # change to 4 the function takes too long
+            return False  # any message with more 5 or more words cannot be the correct answer
+        out = emote_scramble_word["unscrambled_emote_code"] in words
+        logger.log(7, f'[Emote Scramble] answer ({emote_scramble_word["unscrambled_emote_code"]}) in word list: {out}')
         return out
 
     def _find_chars(string: str, char: str):
@@ -254,6 +277,10 @@ class BlammoBot(BaseBot):
 
         global scramble_started
         global scramble_word
+
+        global emote_scramble_started
+        global emote_scramble_word
+
         # TODO: understand whether it reloads these global vars every chat message
         # i.e., if we add 10 more chat games, will it ~10x the timing of on_privmsg_received?
         # If so, this could cause serious global timing issues.
@@ -264,7 +291,8 @@ class BlammoBot(BaseBot):
         # if not self.stream_online and 'toggletimetest' in msg.content and msg.author == 'diraction':
         #     self.stream_online = True
 
-        self.stream_online = self.check_online_signal_file()
+        self.stream_online = False
+        self.stream_online_prev = False
         if self.stream_online == True and self.stream_online_prev == False:
             await msg.reply(f"Bedge 💤 honk shoo Bedge 💤 mimimimi")
             logger.info(
@@ -397,6 +425,17 @@ class BlammoBot(BaseBot):
                 )  # similarity always 1 for correct scramble
                 record.write(SCRAMBLE_QID)
                 SCRAMBLE_QID = ""
+
+        if emote_scramble_started and self._check_emote_scramble_guess(msg):
+            emote_scramble_started = False
+
+            await msg.reply(
+                f"[Emote Scramble] @{msg.author} "
+                "You answered the question correctly and got 10 points. "
+                "FeelsGoodMan The emote was "
+                f'" {emote_scramble_word["unscrambled_emote_code"]} "'
+            )
+            points.add_points(msg.author, 10)
 
     @Command(
         "echo",
@@ -598,6 +637,94 @@ since new scramble round started."
                 record.write(SCRAMBLE_QID)
                 SCRAMBLE_QID = ""
                 scramble_started = False
+                return  # TODO: is break or return better here?
+            t += 1
+
+    @Command(
+        "escramble",
+        help="Play emote scramble.",
+    )
+    async def cmd_escramble(msg: Message):
+        global emote_scramble
+        global emote_scramble_started
+        global emote_scramble_word
+
+        global timestamps
+
+        # Do not remind that an emote scramble is going if it's been less than
+        #   QUIET_REMIND_TIME seconds since the scramble started
+        QUIET_REMIND_TIME: int = 5
+        # Time since the START of the last emote scramble before another emote scramble
+        #   can be started
+        EMOTE_SCRAMBLE_COOLDOWN = silent_cooldown["emote_scramble"]
+        EMOTE_SCRAMBLE_HINT_TIME = 20
+        EMOTE_SCRAMBLE_TIMEOUT = 30
+
+        if restart_scheduled:
+            logger.debug(f"Emote Scramble command blocked -- restart scheduled.")
+            return
+
+        if shutdown_scheduled:
+            logger.debug(f"Emote Scramble command blocked -- shutdown scheduled.")
+            return
+
+        # delta is time since last emote scramble
+        delta = datetime.datetime.now() - timestamps.read("emote_scramble_started")
+        # if emote scramble started and it's been long enough after it's started, remind.
+        if emote_scramble_started and delta > datetime.timedelta(seconds=QUIET_REMIND_TIME):
+            await msg.reply(f"[Emote Scramble] @{msg.author} Emote Scramble already running.")
+            logger.debug(
+                f"Emote Scramble command blocked -- emote scramble already running. Reminded {msg.author}."
+            )
+            return
+        elif emote_scramble_started and delta <= datetime.timedelta(
+            seconds=QUIET_REMIND_TIME
+        ):
+            logger.debug(
+                "Emote Scramble command blocked -- emote scramble already running. "
+                f"Did not remind {msg.author} since it has been {delta.total_seconds()} second "
+                "since new scramble round started."
+            )
+            return
+
+        in_cooldown = delta < datetime.timedelta(seconds=EMOTE_SCRAMBLE_COOLDOWN)
+        if in_cooldown:
+            logger.debug(f"Emote Scramble command blocked -- in silent cooldown.")
+            return
+
+        emote_scramble_started = True
+
+        try:
+            emote_scramble_word = emote_scramble.get_emote_scramble_word()  # returns EmoteScrambleWord
+        except FailedToGetEmoteScrambleWord as e:
+            await msg.reply(f"[Emote Scramble] @{msg.author} Failed to get question. Try again later.")
+            emote_scramble_started = False
+            raise e
+
+        puzzle_stylized = (
+            "[Emote Scramble] An emote scramble game has started. "
+            "Unscramble the following emote to win: "
+            # Provide the scrambled word in lower case for the initial question
+            f'{emote_scramble_word["scrambled_emote_code_lower"]} '
+            "FeelsDankMan TeaTime"
+        )
+
+        await msg.reply(puzzle_stylized)
+
+        timestamps.update("emote_scramble_started")
+
+        t = 0
+        while emote_scramble_started is True:
+            await asyncio.sleep(1)
+            if t == EMOTE_SCRAMBLE_HINT_TIME and emote_scramble_started is True:
+                # Provide the capital letters of the emote code for the hint
+                await msg.reply(f'[Emote Scramble] Hint: {emote_scramble_word["scrambled_emote_code"]}')
+            if t == EMOTE_SCRAMBLE_TIMEOUT and emote_scramble_started is True:
+                await msg.reply(
+                    '[Emote Scramble] No one answered correctly. FeelsBadMan '
+                    f'The word was: " {emote_scramble_word["unscrambled_emote_code"]} "'
+                )
+                emote_scramble_started = False
                 return  # TODO: is break or return better here?
             t += 1
 
@@ -936,6 +1063,21 @@ since new scramble round started."
         if verbose:
             await msg.reply("MrDestructoid Reloaded scramble database")
 
+    async def _reload_escramble(msg: Message, verbose=True, save_timestamps=True):
+        global emote_scramble
+        global timestamps
+
+        logger.info(f"{msg.author} called reload emote scramble command")
+        emote_scramble.reload_emotes()
+        emote_counts = emote_scramble.get_cached_emote_counts()
+        if save_timestamps:
+            try:
+                timestamps.save()
+            except Exception as e:
+                logger.error(f"Could not save timestamps: {e}")
+        if verbose:
+            await msg.reply(f"MrDestructoid Reloaded emote scramble emotes ({emote_counts})")
+
     async def _reload_secretcommand(msg: Message, verbose=True, save_timestamps=True):
         global timestamps
 
@@ -962,6 +1104,7 @@ since new scramble round started."
         global timestamps
         global _reload_trivia
         global _reload_scramble
+        global _reload_escramble
         global _reload_secretcommand
 
         subcommand = msg.content.split(" ")
@@ -976,6 +1119,7 @@ since new scramble round started."
             "all",
             "trivia",
             "scramble",
+            "escramble",
             "secretcommand",
         ]
 
@@ -993,6 +1137,10 @@ since new scramble round started."
             logger.debug(f"Reloading scramble database")
             await _reload_scramble(msg)
 
+        elif subcommand == "escramble":
+            logger.debug(f"Reloading emote scramble database")
+            await _reload_escramble(msg)
+
         elif subcommand == "secretcommand":
             logger.debug(f"Reloading secretcommand")
             await _reload_secretcommand(msg)
@@ -1005,6 +1153,7 @@ since new scramble round started."
                 logger.error(f"Could not save timestamps: {e}")
             await _reload_trivia(msg, verbose=False, save_timestamps=False)
             await _reload_scramble(msg, verbose=False, save_timestamps=False)
+            await _reload_escramble(msg, verbose=False, save_timestamps=False)
             await _reload_secretcommand(msg, verbose=False, save_timestamps=False)
             await msg.reply("MrDestructoid Reloaded all databases")
 
@@ -1214,11 +1363,12 @@ since new scramble round started."
             "MrDestructoid Shutdown scheduled. Will shutdown when no games are running."
         )
         logger.info("Scheduled shutdown initiated.")
-        if any((trivia_started, scramble_started)) and shutdown_scheduled:
+        if any((trivia_started, scramble_started, emote_scramble_started)) and shutdown_scheduled:
             await asyncio.sleep(1)
             logger.debug("Waiting for games to end...")
             logger.debug(f"trivia_started: {trivia_started}")
             logger.debug(f"scramble_started: {scramble_started}")
+            logger.debug(f"emote_scramble_started: {emote_scramble_started}")
             logger.debug(f"shutdown_scheduled: {shutdown_scheduled}")
 
         if shutdown_scheduled:
@@ -1484,6 +1634,9 @@ since new scramble round started."
         global scramble_word  # trivia equivalent: questions  (scrambled, unscrambled)
         global scramble_started  # trivia equivalent: trivia_started
 
+        global emote_scramble_started
+        global emote_scramble_word
+
         logger.info(f"=== BEGIN DUMP TO LOGS ===")
         logger.debug(f"REPLY_NEXT = {REPLY_NEXT}")
         logger.debug(f"TRIVIA_QID = {TRIVIA_QID}")
@@ -1499,6 +1652,9 @@ since new scramble round started."
         logger.debug(f"questions = {questions}")
         logger.debug(f"scramble_started = {scramble_started}")
         logger.debug(f"scramble_word = {scramble_word}")
+
+        logger.debug(f"emote_scramble_started = {emote_scramble_started}")
+        logger.debug(f"emote_scramble_word = {emote_scramble_word}")
 
         logger.info(f"=== END DUMP TO LOGS ===")
 
