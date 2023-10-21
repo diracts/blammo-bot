@@ -39,6 +39,11 @@ Again, the code is extremely messy right now and if you roast me, then L nerd ge
 - TODO: fix issue with no log file while running (ex: log file was moved for archive) and no new log file is created (specifically for logs.log, but may also be happening with other log files)
 - TODO: set up auto log file archiving
 
+## FAQs
+
+### Test Subheading Question
+Test answer
+
 
 ## Contributing
 
