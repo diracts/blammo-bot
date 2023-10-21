@@ -47,6 +47,10 @@ class ThirdPartyEmoteProvider:
         emote_codes = []
         emote_codes.extend(self.fetch_global_emote_codes())
         emote_codes.extend(self.fetch_channel_emote_codes())
+        logger.debug(
+            f"Caching {len(emote_codes)} emotes for {self.__class__.__name__}: "
+            f"{emote_codes}"
+        )
         self.cached_emote_codes = emote_codes
 
     def fetch_global_emote_codes(self) -> list[str]:
