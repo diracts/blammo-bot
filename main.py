@@ -30,6 +30,7 @@ from utils.scramble import ScrambleData
 from utils.secrets import get_oauth, get_client_id, get_client_secret
 from utils import submit
 from utils import secretcommand
+from utils.randommeal import get_meal
 import check_online
 
 # from validate import get_alt_answer, check_string_safety
@@ -896,6 +897,15 @@ since new scramble round started."
             await msg.reply(response)
             return
 
+    @Command("randommeal", help="Give a random meal")
+    async def cmd_randommeal(msg: Message):
+        global timestamps
+
+        user = msg.author
+        meal_response = get_meal()
+        response = f"@{user} {meal_response}"
+        await msg.reply(response)
+
     async def _reload_trivia(msg: Message, verbose=True, save_timestamps=True):
         global trivia
         global timestamps
@@ -1046,6 +1056,7 @@ since new scramble round started."
             "scheduler",
             "timestamps",
             "check_online",
+            "randommeal",
         ]
 
         if loglevel == "DEBUG":
