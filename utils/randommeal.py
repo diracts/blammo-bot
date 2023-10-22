@@ -54,7 +54,7 @@ def _parse_ingredients(raw_response: dict) -> str:
             continue
         ingredients = ingredients + value.lower() + ", "
 
-    ingredients = ingredients.strip(",")
+    ingredients = ingredients.strip(", ")
 
     return ingredients
 
