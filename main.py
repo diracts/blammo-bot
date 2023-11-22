@@ -318,7 +318,7 @@ class BlammoBot(BaseBot):
             ):  # allow 8% error for spelling, punctuation, etc.
                 trivia_started = False
                 await msg.reply(
-                    f'[Trivia] @{msg.author} You answered the question correctly and got 10 points. FeelsGoodMan The answer was: "{questions[1]}"'
+                    f'[Trivia] @{msg.author} You answered the question correctly and got 10 points. FeelsSnowyMan The answer was: "{questions[1]}"'
                 )
                 points.add_points(msg.author, 10)
                 logger.info(f"[Trivia] {msg.author} answered trivia correctly.")
@@ -341,7 +341,7 @@ class BlammoBot(BaseBot):
             elif similarity >= 0.85 and len(msg.content) < 250:
                 trivia_started = False
                 await msg.reply(
-                    f'[Trivia] @{msg.author} You answered the question correctly and got 8 points. FeelsGoodMan The answer was: "{questions[1]}"'
+                    f'[Trivia] @{msg.author} You answered the question correctly and got 8 points. FeelsSnowyMan The answer was: "{questions[1]}"'
                 )
                 points.add_points(msg.author, 8)
                 logger.info(f"[Trivia] {msg.author} answered trivia correctly.")
@@ -377,7 +377,7 @@ class BlammoBot(BaseBot):
                 # logger.debug(f'scramble solution found from {msg.author}')
                 # logger.debug(f'scramble solution: {scramble_word[1]}')
                 await msg.reply(
-                    f'[Scramble] @{msg.author} You answered the question correctly and got 10 points. FeelsGoodMan The word was " {scramble_word[1]} "'
+                    f'[Scramble] @{msg.author} You answered the question correctly and got 10 points. FeelsSnowyMan The word was " {scramble_word[1]} "'
                 )
                 points.add_points(msg.author, 10)
 
@@ -456,11 +456,15 @@ class BlammoBot(BaseBot):
         #     record.write_all(time_padding=120)
         #     timestamps.update('last_auto_record_write')
 
+        # if "notyouraverageafrican" == msg.author.lower():
+        #     await msg.reply(f"ICANT Go do your homework", as_twitch_reply=True)
+        #     return
+
         trivia_started = True
 
         questions = trivia.question()
         question, answer, TRIVIA_QID = questions
-        question_stylized = f"Chatting [Trivia] {question} FeelsPumpkinMan WineTime"
+        question_stylized = f"Chatting [Trivia] {question} FeelsSnowyMan Clap"
 
         # >>> record section <<<
         record.new(TRIVIA_QID)
@@ -484,7 +488,7 @@ class BlammoBot(BaseBot):
             if t == TRIVIA_TIMEOUT and trivia_started is True:
                 trivia_started = False
                 await msg.reply(
-                    f"[Trivia] No one answered correctly. FeelsBadMan The answer was: {questions[1]}"
+                    f"[Trivia] No one answered correctly. FeelsSnowMan The answer was: {questions[1]}"
                 )
                 # >>> record section <<<
                 record.add_outcome(TRIVIA_QID, "timeout")
@@ -591,7 +595,7 @@ since new scramble round started."
                 await msg.reply(f"[Scramble] Hint: {hint}")
             if t == SCRAMBLE_TIMEOUT and scramble_started is True:
                 await msg.reply(
-                    f'[Scramble] No one answered correctly. FeelsBadMan The word was: " {scramble_answer} "'
+                    f'[Scramble] No one answered correctly. FeelsSnowMan The word was: " {scramble_answer} "'
                 )
                 # >>> record section <<<
                 record.add_outcome(SCRAMBLE_QID, "timeout")
@@ -636,6 +640,42 @@ since new scramble round started."
         )
         # await msg.reply('no ping top response placeholder')
 
+    @Command("rank", help="Shows your rank in the points and gambling loss leaderboard")
+    async def cmd_rank(msg: Message):
+        global points
+
+        if msg.content.strip(" ") == "#rank":
+            username = msg.author
+            no_args = True
+        else:
+            username = msg.content.strip(" ")
+            username = username.split(" ")[1]
+            username = username.strip(" ")
+            username = username.strip("@")
+            username = username.lower()
+            no_args = False
+
+        if not _check_all_alphanumeric(username):
+            await msg.reply(
+                f"FeelsDankMan Please check that username again.", as_twitch_reply=True
+            )
+            return
+
+        logger.debug(f"{msg.author} ran command {msg.content}")
+        try:
+            points_rank, loss_rank = points.get_rank(username)
+        except Exception as e:
+            logging.error(f"Error when trying to get rank of {username}: {e}")
+            await msg.reply(f"FeelsDankMan There was an error: {e}")
+        if no_args:
+            await msg.reply(
+                f"@{username} Your points rank is {points_rank} and your gambling loss rank is {loss_rank}."
+            )
+        else:
+            await msg.reply(
+                f"@{username} Points rank: {points_rank}, Gambling loss rank: {loss_rank}"
+            )
+
     @Command(
         "losers",
         help="Shows the top 5 users with the most total accumulated gambling loss",
@@ -654,7 +694,7 @@ since new scramble round started."
     @Command(
         "roulette",
         help="Play roulette",
-        # cooldown=5,    # 5 second cooldown
+        cooldown=1,
     )
     async def cmd_roulette(msg: Message):
         global points
@@ -737,7 +777,7 @@ since new scramble round started."
             return
         elif out == "lose":
             await msg.reply(
-                f"[Roulette] @{msg.author} FeelsBadMan You lost {delta} points and now have {new_bal} points."
+                f"[Roulette] @{msg.author} FeelsSnowMan You lost {delta} points and now have {new_bal} points."
             )
             return
         elif out == "not enough points":

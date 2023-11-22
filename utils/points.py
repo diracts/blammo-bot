@@ -260,3 +260,16 @@ does not match final balance sum ({final_bal}). Forbidden."
         # return top users in the user_data.csv file
         sorted = self.df.sort_values(by="gamble_loss", ascending=False).head(ntop)
         return list(sorted["username"]), list(sorted["gamble_loss"])
+
+    def get_rank(self, username: str) -> tuple:
+        """
+        Outputs a tuple of ints specifying the users point and gamble loss rank.
+        """
+        logger.debug(f"Specificed username in get_rank: {username}")
+        self._validate_user(username)
+        self.df["loss_rank"] = self.df["gamble_loss"].rank(ascending=0)
+        self.df["points_rank"] = self.df["points"].rank(ascending=0)
+        index = self.df.index[self.df["username"] == username].tolist()
+        points_rank = int(self.df.iloc[index]["points_rank"])
+        loss_rank = int(self.df.iloc[index]["loss_rank"])
+        return points_rank, loss_rank
