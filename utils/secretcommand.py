@@ -39,7 +39,7 @@ def load_responses(msg: Message) -> list:
         [0, "https://youtu.be/hycF9IH55Lk", 1],
         [1, f"🫵 ICANT @{msg.author}", 1],
         [2, f"Susge @{msg.author}", 1],
-        [3, f"FeelsDankMan TeaTime hold on ...", 1],
+        [3, f"FeelsDankMan TeaTime hold on ...", 3],
         [4, f"...", 1],
         [5, "", 1],
         [6, "", 1],
@@ -66,7 +66,7 @@ def load_responses(msg: Message) -> list:
         [28, "!fight @Fossabot", 1],
         [29, f"!fight @{msg.author}", 1],
         [30, "!fursona", 1],
-        [31, f"widepeepoHappy", 1],
+        [31, f"widepeepoHappy", 3],
         [32, f"DinoFrogDisco https://youtu.be/XMCVCJ8ZuPs", 1],
         [33, f"https://youtu.be/GQ9UI2h5ipY", 1],
         [34, f"Salute https://youtu.be/YYEAmK4NCd8", 1],
@@ -76,7 +76,7 @@ def load_responses(msg: Message) -> list:
         [38, f"@{msg.author} ReallyMad Stop trying the secret command!", 1],
         [39, f"@{msg.author} Grrr Stop trying the secret command!", 1],
         [40, f"KEKL https://youtu.be/Fkk9DI-8el4", 1],
-        [41, f"PauseChamp 🎁", 1],
+        [41, f"PauseChamp 🎁", 5],
         [42, f"Joel https://youtu.be/YAgJ9XugGBo", 1],
         [43, f"https://youtu.be/aNMKigmGreI", 1],
         [44, f"Peeporun https://youtu.be/6sLSArQ8Pvw", 1],
@@ -86,6 +86,27 @@ def load_responses(msg: Message) -> list:
         [48, f"https://youtu.be/Sd4Qpf8Y6DE", 1],
         [49, f"https://youtu.be/vLe_BZ1mo3I", 1],
         [50, f"https://youtu.be/UtaH0wVm6H4", 1],
+        [51, f"WAYTOODANK https://youtu.be/pVQqEQ68FR8", 1],
+        [52, f"Concerned https://youtu.be/idi524Ni3qA", 1],
+        [53, f"https://youtu.be/KCzwyFHSMdY", 1],
+        [54, f"https://youtu.be/TCm9788Tb5g", 1],
+        [55, f"https://youtu.be/N-7gbWKbXbQ", 1],
+        [56, f"SHIVERMETIMBERS https://youtu.be/tw4CPZZkzTU", 1],
+        [57, f"spongePls https://youtu.be/39UDZMgPg5k", 1],
+        [58, f"https://youtu.be/b9ZxXwwxRvc", 1],
+        [59, f"https://youtu.be/TOeQS7P9c5Q", 1],
+        [60, f"Jamgie https://youtu.be/fIxuMIf0pJ8", 1],
+        [61, f"🤙 https://youtu.be/jYHkBCrAzPs", 1],
+        [62, f"hasBee https://youtu.be/Uae8qOr6Myw", 1],
+        [63, f"ICANT https://youtu.be/L8XbI9aJOXk", 1],
+        [64, f"AAAA https://youtu.be/-qz6-2FASlY", 1],
+        [65, f"https://youtu.be/N-dxAXIwAv8", 1],
+        [66, f"veryCat https://youtu.be/73Y_0TKFqmg", 1],
+        [67, f"FeelsStrongMan Clap https://youtu.be/YFEYb_ay8mo", 1],
+        [68, f"Jupijej https://youtu.be/kWVFEVWJMz8", 1],
+        [69, f"SHIVERMETIMBERS https://youtu.be/fKhAeIm6ins", 1],
+        [70, f"Jamgie https://youtu.be/9oQcqZOcs0Q", 2],
+        [71, f"https://youtu.be/emJsHKINn-s", 1],
     ]
     return responses
 
@@ -170,7 +191,7 @@ async def run(msg: Message, points: PointData):
         return
     else:
         await asyncio.sleep(time1)
-        random_gift = random.randint(2, 20)
+        random_gift = random.randint(2, 100)
         points.add_points(msg.author, random_gift)
         await msg.reply(
             f"peepoHas FBCatch 🎁 Here's {random_gift} points for you",
