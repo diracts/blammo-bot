@@ -78,7 +78,7 @@ def load_responses(msg: Message) -> list:
         [40, f"KEKL https://youtu.be/Fkk9DI-8el4", 1],
         [41, f"PauseChamp 🎁", 5],
         [42, f"Joel https://youtu.be/YAgJ9XugGBo", 1],
-        [43, f"https://youtu.be/aNMKigmGreI", 1],
+        # [43, f"https://youtu.be/aNMKigmGreI", 1],
         [44, f"Peeporun https://youtu.be/6sLSArQ8Pvw", 1],
         [45, f"MEOW https://youtu.be/0fekTeVXMCM", 1],
         [46, f"HYPERNODDERS https://youtu.be/xbPwaAFHDG8", 1],
