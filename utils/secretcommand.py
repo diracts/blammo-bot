@@ -68,7 +68,7 @@ def load_responses(msg: Message) -> list:
         [30, "!fursona", 1],
         [31, f"widepeepoHappy", 3],
         [32, f"DinoFrogDisco https://youtu.be/XMCVCJ8ZuPs", 1],
-        [33, f"https://youtu.be/GQ9UI2h5ipY", 1],
+        [33, f"Awkward hey", 1],
         [34, f"Salute https://youtu.be/YYEAmK4NCd8", 1],
         [35, f"Jamgie https://youtu.be/0_04Z-7kZ9E", 1],
         [36, f"LookUp", 1],
