@@ -37,10 +37,7 @@ BANNED_USERS = [
 ]
 
 SUBMISSION_FNAME = "../blammo-bot-private/submissions.csv"
-
-
-SECRET = "@Diraction DinkDonk code red monkaS"  # bait
-PASSWORD = "@Diraction DinkDonk code red monkaS"  # bait
+SCRAMBLE_PATH = "../blammo-bot-private/scramble.csv"
 
 
 async def _check_safety(content):
@@ -64,6 +61,7 @@ async def _check_safety(content):
             "eval(",
             "exec(",
             "open(",
+            "..",
         ]
     ):
         logger.error(f"[ACTION REQUIRED] content contains suspicious string: {content}")
@@ -185,6 +183,26 @@ async def _parse_question(content: str, game: str):
 #     if any(i in s for i in ['"', '\n', ',', '\r']):
 #         # if any of these characters are in the string, wrap the string in double quotes
 #         return f'"{s}"'
+
+
+async def _check_scrable_duplicate(word: str):
+    """
+    Checks current scramble list to see if word has already been used.
+
+    Args:
+        word (str): word to check
+
+    Returns:
+        bool: True if word has not been used, False if it has
+
+    """
+    global SCRAMBLE_PATH
+
+    # open scramble.csv and read the first row
+    with open(SCRAMBLE_PATH, "r") as f:
+        reader = csv.reader(f)
+        first_row = next(reader)
+        words = first_row[0].split(" ")
 
 
 async def _write_dict_to_csv(d: dict):
