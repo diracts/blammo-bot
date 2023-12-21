@@ -34,6 +34,9 @@ from utils import secretcommand
 from utils.randommeal import get_meal
 import check_online
 
+# TODO: Clean up import section
+# TODO: Add exception handling to import section
+
 # from validate import get_alt_answer, check_string_safety
 # 10 - DEBUG + level 11
 # 11 - all chat messages + level 12
