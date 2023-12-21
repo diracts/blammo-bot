@@ -9,6 +9,7 @@ import requests
 import datetime
 import signal
 import re
+import subprocess
 from pathlib import Path
 from twitchbot import BaseBot
 from twitchbot import event_handler, Event, Command, Message, Channel, PollData, get_bot
@@ -1546,6 +1547,18 @@ since new scramble round started."
     async def cmd_dvl(msg: Message):
         # dumps viewer list
         pass
+
+    @Command("restart", permission="mod", help="Restart bot via supervisorctl command")
+    async def cmd_restart(msg: Message):
+        try:
+            await msg.reply("MrDestructoid Restarting...")
+            subprocess.run(
+                "supervisorctl restart blammobot", shell=True, executable="/bin/bash"
+            )
+        except Exception as e:
+            # TODO: message truncation should auto appent a "..."
+            await msg.reply(f"MrDestructoid Error, could not restart: {e}"[:449])
+            logger.error(f"Failed to restart: {e}")
 
     async def on_whisper_received(self, msg: Message):
         global REPLY_NEXT
