@@ -1303,6 +1303,7 @@ since new scramble round started."
     async def cmd_blammo(msg: Message):
         await msg.reply("peepoHas 🪄 blammo")
 
+    # TODO: this is shit - make it better
     @Command("joel", help="Joel")
     async def cmd_joel(msg: Message):
         i = random.randint(1, 15)
@@ -1337,6 +1338,7 @@ since new scramble round started."
         elif i == 15:
             await msg.reply("Joel Looking brilliant")
 
+    # TODO: move this code to module in /utils/ like #secretcommand 
     @Command("hasan", help="Hasan")
     async def cmd_hasan(msg: Message):
         responses = [
