@@ -322,7 +322,7 @@ class BlammoBot(BaseBot):
             ):  # allow 8% error for spelling, punctuation, etc.
                 trivia_started = False
                 await msg.reply(
-                    f'[Trivia] @{msg.author} You answered the question correctly and got 10 points. FeelsSnowyMan The answer was: "{questions[1]}"'
+                    f'[Trivia] @{msg.author} You answered the question correctly and got 10 points. CrungoSmile The answer was: "{questions[1]}"'
                 )
                 points.add_points(msg.author, 10)
                 logger.info(f"[Trivia] {msg.author} answered trivia correctly.")
@@ -345,7 +345,7 @@ class BlammoBot(BaseBot):
             elif similarity >= 0.85 and len(msg.content) < 250:
                 trivia_started = False
                 await msg.reply(
-                    f'[Trivia] @{msg.author} You answered the question correctly and got 8 points. FeelsSnowyMan The answer was: "{questions[1]}"'
+                    f'[Trivia] @{msg.author} You answered the question correctly and got 8 points. CrungoComfy The answer was: "{questions[1]}"'
                 )
                 points.add_points(msg.author, 8)
                 logger.info(f"[Trivia] {msg.author} answered trivia correctly.")
@@ -381,7 +381,7 @@ class BlammoBot(BaseBot):
                 # logger.debug(f'scramble solution found from {msg.author}')
                 # logger.debug(f'scramble solution: {scramble_word[1]}')
                 await msg.reply(
-                    f'[Scramble] @{msg.author} You answered the question correctly and got 10 points. FeelsSnowyMan The word was " {scramble_word[1]} "'
+                    f'[Scramble] @{msg.author} You answered the question correctly and got 10 points. CrungoSmile The word was " {scramble_word[1]} "'
                 )
                 points.add_points(msg.author, 10)
 
@@ -468,7 +468,7 @@ class BlammoBot(BaseBot):
 
         questions = trivia.question()
         question, answer, TRIVIA_QID = questions
-        question_stylized = f"Chatting [Trivia] {question} FeelsSnowyMan Clap"
+        question_stylized = f"Chatting [Trivia] {question} CrungoSmile TeaTime"
 
         # >>> record section <<<
         record.new(TRIVIA_QID)
@@ -492,7 +492,7 @@ class BlammoBot(BaseBot):
             if t == TRIVIA_TIMEOUT and trivia_started is True:
                 trivia_started = False
                 await msg.reply(
-                    f"[Trivia] No one answered correctly. FeelsSnowMan The answer was: {questions[1]}"
+                    f"[Trivia] No one answered correctly. Crungo The answer was: {questions[1]}"
                 )
                 # >>> record section <<<
                 record.add_outcome(TRIVIA_QID, "timeout")
@@ -599,7 +599,7 @@ since new scramble round started."
                 await msg.reply(f"[Scramble] Hint: {hint}")
             if t == SCRAMBLE_TIMEOUT and scramble_started is True:
                 await msg.reply(
-                    f'[Scramble] No one answered correctly. FeelsSnowMan The word was: " {scramble_answer} "'
+                    f'[Scramble] No one answered correctly. Crungo The word was: " {scramble_answer} "'
                 )
                 # >>> record section <<<
                 record.add_outcome(SCRAMBLE_QID, "timeout")
@@ -698,7 +698,7 @@ since new scramble round started."
     @Command(
         "roulette",
         help="Play roulette",
-        cooldown=1,
+        cooldown=2,
     )
     async def cmd_roulette(msg: Message):
         global points
@@ -758,7 +758,7 @@ since new scramble round started."
         if fmt in ("percent", "points"):
             if wager < 0:
                 await msg.reply(
-                    f"[Roulette] @{msg.author} Weirdge Wager must be positive."
+                    f"[Roulette] @{msg.author} CrungoSmileGun Wager must be positive."
                 )
                 return
             if wager == 0:
@@ -781,17 +781,17 @@ since new scramble round started."
             return
         elif out == "lose":
             await msg.reply(
-                f"[Roulette] @{msg.author} FeelsSnowMan You lost {delta} points and now have {new_bal} points."
+                f"[Roulette] @{msg.author} CrungoBonk You lost {delta} points and now have {new_bal} points."
             )
             return
         elif out == "not enough points":
             await msg.reply(
-                f"[Roulette] @{msg.author} Weirdge You don't have enough points for that. Get your money up."
+                f"[Roulette] @{msg.author} CrungoSmileGun You don't have enough points for that. Get your money up."
             )
             return
         elif out == "no points":
             await msg.reply(
-                f"[Roulette] @{msg.author} Sadge You don't have any points."
+                f"[Roulette] @{msg.author} Crungo You don't have any points."
             )
 
     @Command(
@@ -840,7 +840,7 @@ since new scramble round started."
         # check if the msg.author has enough points
         if points.get_points(sender) < transfer_amount:
             await msg.reply(
-                f"@{msg.author} Weirdge You can't give more points than you have."
+                f"@{msg.author} CrungoSmileGun You can't give more points than you have."
             )
             return
 
@@ -852,7 +852,7 @@ since new scramble round started."
             return
         elif outcome == "not enough points":
             await msg.reply(
-                f"@{msg.author} Weirdge You can't give more points than you have."
+                f"@{msg.author} CrungoSmileGun You can't give more points than you have."
             )
             return
         elif outcome == "invalid amount":
@@ -1338,7 +1338,7 @@ since new scramble round started."
         elif i == 15:
             await msg.reply("Joel Looking brilliant")
 
-    # TODO: move this code to module in /utils/ like #secretcommand 
+    # TODO: move this code to module in /utils/ like #secretcommand
     @Command("hasan", help="Hasan")
     async def cmd_hasan(msg: Message):
         responses = [

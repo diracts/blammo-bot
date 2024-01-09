@@ -68,6 +68,12 @@ class ScrambleData:
             shuffled = "".join(lst)
         return shuffled
 
+    def validate_scrambled_word(self, s: str):
+        """
+        Check that input string (scrambled word) does not contain automodded string.
+
+        """
+
     def get_word(self):
         # return a tuple of (scrambled word, unscrambled word)
         if not self.allow_load:
@@ -75,7 +81,7 @@ class ScrambleData:
 
         found_valid = False  # bool to keep track of if we've found a valid word
         while not found_valid:
-            w_df = self.df.sample(n=1)
+            w_df = self.df.sample(n=1)  # shuffle words dataframe and get 1 item from it
             w = w_df.to_dict("records")[
                 0
             ]  # verify that 'records' is the correct arg for what we want
