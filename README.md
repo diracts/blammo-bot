@@ -14,6 +14,8 @@ Again, the code is extremely messy right now and if you roast me, then L nerd ge
 
 ## To-Do Items
 
+- Rebuild the question id system to use alphanumeric id strings (make them shorter)
+- Add #report command (report either question id or question ask number that is unique every question run)
 - Add example trivia and scramble datasets so people know how to interact with them correctly
 - Add documentation for all current functions
 - Fix the latin-1 vs. UTF-8 encoding issue with the trivia database
