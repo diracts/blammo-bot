@@ -461,7 +461,9 @@ class BlammoBot(BaseBot):
         #     timestamps.update('last_auto_record_write')
 
         # if "notyouraverageafrican" == msg.author.lower():
-        #     await msg.reply(f"ICANT Go do your homework", as_twitch_reply=True)
+        #     await msg.reply(
+        #         f"CrungoSmile https://imgur.com/a/e3KWpYW", as_twitch_reply=True
+        #     )
         #     return
 
         trivia_started = True

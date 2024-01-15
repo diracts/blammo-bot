@@ -39,6 +39,20 @@ Again, the code is extremely messy right now and if you roast me, then L nerd ge
 - TODO: fix issue with no log file while running (ex: log file was moved for archive) and no new log file is created (specifically for logs.log, but may also be happening with other log files)
 - TODO: set up auto log file archiving
 
+## Trivia Editing
+
+### Numbers in answers
+
+In general, numbers should be given in their numerical form (ex. "8") instead of their word form (ex. "eight") in answers. This should be the default format most of the time, but there are many exceptions. 
+
+### Former Names
+
+Questions involving the former name of a person are allowed in most cases (ex. Q: "What was Bruno Mars named at birth?", A: "Peter Hernandez"). However, questions involving the former name of people who have transitioned (i.e. their dead name) are never allowed.
+
+### Questions Involving Some Aspect of the Current Date
+
+Careful treatment must be given to questions involving some detail that is attached to the current date. For example, the question "To the nearest million, what is the current population of China?" is bad because we do not know what "current" means here. Does it mean this year? Last year? Five years ago? Who knows. This question can be fixed by adding mention to a specific date. Now, the question might read "To the nearest million, what _was_ the population of China _in 2023_?" This is much better. It is also good practice to keep these kinds of questions in past tense. 
+
 ## FAQs
 
 ### Test Subheading Question
