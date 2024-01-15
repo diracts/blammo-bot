@@ -9,8 +9,6 @@ Major work in progress. The code is extremely messy right now and there are core
 - Logs
 - Anything the sickos could abuse
 
-Again, the code is extremely messy right now and if you roast me, then L nerd get rekt ur a bigger nerd than i am ICANT
-
 
 ## To-Do Items
 
@@ -57,8 +55,17 @@ Careful treatment must be given to questions involving some detail that is attac
 
 ## FAQs
 
-### Test Subheading Question
-Test answer
+### Where are the trivia questions? 
+You aren't going to find them here! The trivia database is in a separate private repository that will not be made public. The same is true for the scramble database. This is the only part of the bot that is not available publicly.
+
+### Can I use this code? 
+Yes of course! If you decide to use this code, I would appreciate a reference back to this repository somewhere in your documentation, but other than that, go wild. 
+
+### Roulette is rigged! Stop it! 
+Roulette is always 50-50 chance of success or failure. 
+
+### Why isn't this project written in Go?
+stfu nerd (i don't know go)
 
 
 ## Contributing
