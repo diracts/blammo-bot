@@ -53,6 +53,10 @@ Questions involving the former name of a person are allowed in most cases (ex. Q
 
 Careful treatment must be given to questions involving some detail that is attached to the current date. For example, the question "To the nearest million, what is the current population of China?" is bad because we do not know what "current" means here. Does it mean this year? Last year? Five years ago? Who knows. This question can be fixed by adding mention to a specific date. Now, the question might read "To the nearest million, what _was_ the population of China _in 2023_?" This is much better. It is also good practice to keep these kinds of questions in past tense. 
 
+### British Spelling
+
+U.S. English spelling is to be used over British spelling except in proper nouns, titles of works, or instances where distinction is needed. No aluminium, colour, and massacre. 
+
 ## FAQs
 
 ### Where are the trivia questions? 
