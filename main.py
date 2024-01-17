@@ -1585,6 +1585,10 @@ if __name__ == "__main__":
 
     # BlammoBot().run()
 
+    # add spam checker 
+    # terminate blammobot loop when spam checker returns value
+    # instantiate SpammoBot simultaneously
+
     loop = asyncio.get_event_loop()
     loop.create_task(check_online.check_loop())
     loop.create_task(BlammoBot().run())
