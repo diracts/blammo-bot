@@ -1380,7 +1380,6 @@ since new scramble round started."
             "peepoHas top of the hour",
             "peepoHas donnie is gone",
             "peepoHas in the cars cinematic universe...",
-            "peepoHas sounds like chicken tendies",
             "peepoHas *bans chatter*",
             "peepoHas",
             "peepoHas",
