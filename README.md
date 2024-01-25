@@ -38,6 +38,11 @@ Major work in progress. The code is extremely messy right now and there are core
     - hacky idea: restart.sh; thru python launch shell to run restart.sh with supervisorctl restart blammobot after 1 second delay
 - TODO: fix issue with no log file while running (ex: log file was moved for archive) and no new log file is created (specifically for logs.log, but may also be happening with other log files)
 - TODO: set up auto log file archiving
+- ADD FEATURE: vote for next feature I should add. one vote per user. fixed voting window. 
+- ADD CORE FEATURE: add more complex command timeout triggers. edit the bot framework to do this. currently, there is only a global timeout. it would be useful to have static per-user cooldown, dynamic per-user cooldown, and dynamic global cooldown. "dynamic" means the cooldown changes in response to some other input data. this could be a recent history of command calls (eg. cooldown increases if you keep spamming #roulette), chat activity (eg. longer cooldowns when chat is more active), or long cooldown when a certain command is run (eg. future game can only be played if trivia and/or scramble are not also being played).
+- ADD COMMANDS: credits, contacts
+- FIX ISSUE: #submit suspicious string matching should include ".." but exclude "...". right now, you are blocked from submitting "..." since it includes "..". 
+- ADD FILE: add an install.sh script
 
 ## Trivia Editing
 
@@ -69,7 +74,7 @@ Yes of course! If you decide to use this code, I would appreciate a reference ba
 Roulette is always 50-50 chance of success or failure. 
 
 ### Why isn't this project written in Go?
-stfu nerd (i don't know go)
+stfu nerd (i don't know Go)
 
 
 ## Contributing
