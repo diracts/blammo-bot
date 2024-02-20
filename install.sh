@@ -21,10 +21,13 @@ echo "Do you have a virtual environment you would like to use? (y/n)"
 read use_virtual_env
 
 # Loop to check the user's input
-while [ $use_virtual_env != "y" ] && [ $use_virtual_env != "n" ]; do
-    echo "Please enter 'y' or 'n'"
-    read use_virtual_env
-done
+while true; do
+    read -p "Do you have a virtual environment you would like to use? (y/n) " yn
+    case $yn in
+        [Yy]* ) use_virtual_env="y"; break;;
+        [Nn]* ) use_virtual_env="n"; break;;
+        * ) echo "Please answer y or n.";;
+    esac
 
 # If the user has a virtual environment, ask for the path to the virtual environment
 if [ $use_virtual_env == "y" ]; then
