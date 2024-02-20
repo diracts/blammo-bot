@@ -18,11 +18,13 @@ fi
 
 # Loop to check the user's input
 while true; do
-    read -p "Do you have a virtual environment you would like to use? (y/n) " yn
+    read -p "Do you have a virtual environment you would like to use? [y/N] " yn
     case $yn in
+        # [Yy]* ) use_virtual_env="y"; break;;
+        # [Nn]* ) use_virtual_env="n"; break;;
+        # * ) echo "Please answer y or n.";;
         [Yy]* ) use_virtual_env="y"; break;;
-        [Nn]* ) use_virtual_env="n"; break;;
-        * ) echo "Please answer y or n.";;
+        * ) use_virtual_env="n"; break;;
     esac
 done
 
@@ -33,19 +35,38 @@ if [ $use_virtual_env == "y" ]; then
     source $virtual_env_path/bin/activate
 else
     # If the user does not have a virtual environment, create one
-    echo "Please enter the name of the virtual environment you would like to create"
+    echo "Please enter the name of the virtual environment you would like to create:"
     read virtual_env_name
     python3 -m venv $virtual_env_name
     source $virtual_env_name/bin/activate
 fi
 
+# List off all the required packages to the user
+echo "The following packages are required for this bot:"
+for package in "${required_packages[@]}"; do
+    echo $package
+done
+
+# TODO: Make sure this installs into the right venv
+# TODO: If new venv is in this repo, append rel path to .gitignore
+
+# Create a list of required python packages
+# TODO: remove packages that are default in python
+required_packages=(
+    "numpy"
+    "pandas"
+    "matplotlib"
+    "seaborn"
+    "scikit-learn"
+    "jupyter"
+)
+
 # Ask whether you would like to install all the packages or select them individually
 while true; do
-    read -p "Would you like to install all the required packages? (y/n) " yn
+    read -p "Would you like to install all the required packages? [Y/n] " yn
     case $yn in
-        [Yy]* ) install_all="y"; break;;
         [Nn]* ) install_all="n"; break;;
-        * ) echo "Please answer y or n.";;
+        * ) install_all="y"; break;;
     esac
 done
 
@@ -66,25 +87,6 @@ function check_install {
     fi
 }
 
-# TODO: Make sure this installs into the right venv
-# TODO: If new venv is in this repo, append rel path to .gitignore
-
-# Create a list of required python packages
-# TODO: remove packages that are default in python
-required_packages=(
-    "numpy"
-    "pandas"
-    "matplotlib"
-    "seaborn"
-    "scikit-learn"
-    "jupyter"
-)
-
-# List off all the required packages to the user
-echo "The following packages are required for this project:"
-for package in "${required_packages[@]}"; do
-    echo $package
-done
 
 if [ $install_all == "y" ]; then
     # pip install every package in one command
