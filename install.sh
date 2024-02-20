@@ -5,7 +5,7 @@ if ! [ -x "$(command -v python3)" ]; then
     echo "Error: python3 is not installed." >&2
     exit 1
 else
-    echo "found python3 installation"
+    echo "Found existing python3 installation"
 fi
 
 # Test that the user has pip installed. If not, return an error.
@@ -13,12 +13,8 @@ if ! [ -x "$(command -v pip)" ]; then
     echo "Error: pip is not installed." >&2
     exit 1
 else
-    echo "found pip installation"
+    echo "Found existing pip installation"
 fi
-
-# Ask whether the user already has a virtual environment they would like to use
-echo "Do you have a virtual environment you would like to use? (y/n)"
-read use_virtual_env
 
 # Loop to check the user's input
 while true; do
@@ -28,6 +24,7 @@ while true; do
         [Nn]* ) use_virtual_env="n"; break;;
         * ) echo "Please answer y or n.";;
     esac
+done
 
 # If the user has a virtual environment, ask for the path to the virtual environment
 if [ $use_virtual_env == "y" ]; then
@@ -41,6 +38,16 @@ else
     python3 -m venv $virtual_env_name
     source $virtual_env_name/bin/activate
 fi
+
+# Ask whether you would like to install all the packages or select them individually
+while true; do
+    read -p "Would you like to install all the required packages? (y/n) " yn
+    case $yn in
+        [Yy]* ) install_all="y"; break;;
+        [Nn]* ) install_all="n"; break;;
+        * ) echo "Please answer y or n.";;
+    esac
+done
 
 # Create a function to check if a python package is installed
 #   if not installed, ask whether to install it and install it
@@ -87,10 +94,28 @@ required_packages=(
     "difflib"
 )
 
-# Loop through the list of required packages and check if they are installed
-for package in "${required_packages[@]}"; do
-    check_install $package
-done
+if [ $install_all == "y" ]; then
+    # Loop through the list of required packages and install them
+    for package in "${required_packages[@]}"; do
+        pip install $package
+    done
+else
+    # Loop through the list of required packages and check if they are installed
+    for package in "${required_packages[@]}"; do
+        check_install $package
+    done
+fi
 
 # Install fork of PythonTwitchBotFramework
+echo Installing required package: PythonTwitchBotFramework fork
 pip install https://github.com/diracts/PythonTwitchBotFramework.git
+
+
+
+
+# # Loop through the list of required packages and check if they are installed
+# for package in "${required_packages[@]}"; do
+#     check_install $package
+# done
+
+# # Install fork of PythonTwitchBotFramework
