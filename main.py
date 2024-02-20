@@ -19,8 +19,8 @@ from twitchbot.config import get_nick, get_oauth, get_client_id, get_client_secr
 import asyncio
 from difflib import SequenceMatcher as SM
 
-from twitchbot.command import Command
-from twitchbot.message import Message
+from PythonTwitchBotFramework.twitchbot.command import Command
+from PythonTwitchBotFramework.twitchbot.message import Message
 
 from utils.dbutils import clean_qid, add_qid
 from utils.timestamps import Timestamps
