@@ -50,6 +50,10 @@ required_packages=(
     "seaborn"
     "scikit-learn"
     "jupyter"
+    "aiohttp"
+    "dataclasses"
+    "sqlalchemy"
+    "websockets"
 )
 # List off all the required packages to the user
 echo "The following packages are required for this bot:"
