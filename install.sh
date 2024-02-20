@@ -1,21 +1,30 @@
 #!/bin/bash
 
-# Ask whether the user already has a virtual environment they would like to use
-echo "Do you have a virtual environment you would like to use? (y/n)"
-read use_virtual_env
-
 # Test that the user has python3 installed. If not, return an error. 
 if ! [ -x "$(command -v python3)" ]; then
     echo "Error: python3 is not installed." >&2
     exit 1
+else
+    echo "found python3 installation"
 fi
 
 # Test that the user has pip installed. If not, return an error.
 if ! [ -x "$(command -v pip)" ]; then
     echo "Error: pip is not installed." >&2
     exit 1
+else
+    echo "found pip installation"
 fi
 
+# Ask whether the user already has a virtual environment they would like to use
+echo "Do you have a virtual environment you would like to use? (y/n)"
+read use_virtual_env
+
+# Loop to check the user's input
+while [ $use_virtual_env != "y" ] && [ $use_virtual_env != "n" ]; do
+    echo "Please enter 'y' or 'n'"
+    read use_virtual_env
+done
 
 # If the user has a virtual environment, ask for the path to the virtual environment
 if [ $use_virtual_env == "y" ]; then
