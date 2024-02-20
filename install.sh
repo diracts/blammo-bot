@@ -108,12 +108,11 @@ fi
 echo Installing required package: PythonTwitchBotFramework fork
 pip install https://github.com/diracts/PythonTwitchBotFramework.git
 
+# Adding the virtual environment to the .gitignore
+if [ $use_virtual_env == "n" ]; then
+    echo "Adding the virtual environment to the .gitignore"
+    echo $virtual_env_name >> .gitignore
+else
+    echo "If your virtual environment is in this directory, make sure to add it to the .gitignore"
+fi
 
-
-
-# # Loop through the list of required packages and check if they are installed
-# for package in "${required_packages[@]}"; do
-#     check_install $package
-# done
-
-# # Install fork of PythonTwitchBotFramework
