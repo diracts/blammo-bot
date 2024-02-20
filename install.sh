@@ -76,7 +76,6 @@ done
 # Create a function to check if a python package is installed
 #   if not installed, ask whether to install it and install it
 #   if installed, print that it is already installed
-
 function check_install {
     if python -c "import $1" &> /dev/null; then
         echo "$1 is already installed"
@@ -103,7 +102,7 @@ fi
 
 # Install fork of PythonTwitchBotFramework
 echo Installing required package: PythonTwitchBotFramework fork
-pip install https://github.com/diracts/PythonTwitchBotFramework.git
+pip install git+https://github.com/diracts/PythonTwitchBotFramework.git
 
 # Adding the virtual environment to the .gitignore
 if [ $use_virtual_env == "n" ]; then
