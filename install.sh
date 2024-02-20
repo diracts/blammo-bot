@@ -60,7 +60,7 @@ required_packages=(
 echo ""
 echo "The following packages are required for this bot:"
 for package in "${required_packages[@]}"; do
-    echo $package
+    echo "      ${package}"
 done
 
 
