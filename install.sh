@@ -4,6 +4,19 @@
 echo "Do you have a virtual environment you would like to use? (y/n)"
 read use_virtual_env
 
+# Test that the user has python3 installed. If not, return an error. 
+if ! [ -x "$(command -v python3)" ]; then
+    echo "Error: python3 is not installed." >&2
+    exit 1
+fi
+
+# Test that the user has pip installed. If not, return an error.
+if ! [ -x "$(command -v pip)" ]; then
+    echo "Error: pip is not installed." >&2
+    exit 1
+fi
+
+
 # If the user has a virtual environment, ask for the path to the virtual environment
 if [ $use_virtual_env == "y" ]; then
     echo "Please enter the path to the virtual environment"
