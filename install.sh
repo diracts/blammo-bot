@@ -37,21 +37,12 @@ else
     # If the user does not have a virtual environment, create one
     echo "Please enter the name of the virtual environment you would like to create:"
     read virtual_env_name
+    echo "Creating virtual environment: $virtual_env_name"
     python3 -m venv $virtual_env_name
     source $virtual_env_name/bin/activate
 fi
 
-# List off all the required packages to the user
-echo "The following packages are required for this bot:"
-for package in "${required_packages[@]}"; do
-    echo $package
-done
-
-# TODO: Make sure this installs into the right venv
-# TODO: If new venv is in this repo, append rel path to .gitignore
-
 # Create a list of required python packages
-# TODO: remove packages that are default in python
 required_packages=(
     "numpy"
     "pandas"
@@ -60,6 +51,12 @@ required_packages=(
     "scikit-learn"
     "jupyter"
 )
+# List off all the required packages to the user
+echo "The following packages are required for this bot:"
+for package in "${required_packages[@]}"; do
+    echo $package
+done
+
 
 # Ask whether you would like to install all the packages or select them individually
 while true; do
