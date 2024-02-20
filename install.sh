@@ -54,8 +54,10 @@ required_packages=(
     "dataclasses"
     "sqlalchemy"
     "websockets"
+    "async-timeout"
 )
 # List off all the required packages to the user
+echo ""
 echo "The following packages are required for this bot:"
 for package in "${required_packages[@]}"; do
     echo $package
