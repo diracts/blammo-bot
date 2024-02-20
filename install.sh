@@ -24,7 +24,7 @@ while true; do
         # [Nn]* ) use_virtual_env="n"; break;;
         # * ) echo "Please answer y or n.";;
         [Yy]* ) use_virtual_env="y"; break;;
-        * ) use_virtual_env="n"; break;;
+        * ) echo "N"; use_virtual_env="n"; break;;
     esac
 done
 
@@ -66,7 +66,7 @@ while true; do
     read -p "Would you like to install all the required packages? [Y/n] " yn
     case $yn in
         [Nn]* ) install_all="n"; break;;
-        * ) install_all="y"; break;;
+        * ) echo "Y"; install_all="y"; break;;
     esac
 done
 
