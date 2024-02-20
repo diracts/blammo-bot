@@ -95,10 +95,8 @@ required_packages=(
 )
 
 if [ $install_all == "y" ]; then
-    # Loop through the list of required packages and install them
-    for package in "${required_packages[@]}"; do
-        pip install $package
-    done
+    # pip install every package in one command
+    pip install "${required_packages[@]}"
 else
     # Loop through the list of required packages and check if they are installed
     for package in "${required_packages[@]}"; do
