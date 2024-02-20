@@ -78,21 +78,13 @@ required_packages=(
     "seaborn"
     "scikit-learn"
     "jupyter"
-    # "ipykernel"
-    # "ipywidgets"
-    # "plotly"
-    "urllib3"
-    "requests"
-    "asyncio"
-    "subprocess"
-    "datetime"
-    "time"
-    "json"
-    "datetime"
-    "signal"
-    "pathlib"
-    "difflib"
 )
+
+# List off all the required packages to the user
+echo "The following packages are required for this project:"
+for package in "${required_packages[@]}"; do
+    echo $package
+done
 
 if [ $install_all == "y" ]; then
     # pip install every package in one command
