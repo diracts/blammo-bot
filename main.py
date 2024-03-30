@@ -10,10 +10,14 @@ import datetime
 import signal
 import re
 import subprocess
+import math
+from urllib.parse import urlencode, urlparse, urlunparse, urljoin
 from pathlib import Path
 from twitchbot import BaseBot
 from twitchbot import event_handler, Event, Command, Message, Channel, PollData, get_bot
 from twitchbot.config import get_nick, get_oauth, get_client_id, get_client_secret
+
+# from newsapi import NewsApiClient
 
 # from trivia import trivia
 import asyncio
@@ -28,7 +32,7 @@ from utils.record import Record
 from utils.points import PointData
 from utils.trivia import TriviaData
 from utils.scramble import ScrambleData
-from utils.secrets import get_oauth, get_client_id, get_client_secret
+from utils.secrets import get_oauth, get_client_id, get_client_secret, get_wa_appid
 from utils import submit
 from utils import secretcommand
 from utils.randommeal import get_meal
@@ -461,9 +465,7 @@ class BlammoBot(BaseBot):
         #     timestamps.update('last_auto_record_write')
 
         # if "notyouraverageafrican" == msg.author.lower():
-        #     await msg.reply(
-        #         f"CrungoSmile https://imgur.com/a/e3KWpYW", as_twitch_reply=True
-        #     )
+        #     await msg.reply(f"ROFL https://imgur.com/a/e3KWpYW", as_twitch_reply=True)
         #     return
 
         trivia_started = True
@@ -1480,6 +1482,21 @@ since new scramble round started."
             await msg.reply(f"FeelsDankMan TeaTime something is broken...")
             return
 
+    # @Command("news", help="Get the latest news. This command is in development.", permission="mod")
+    # async def cmd_news(msg: Message):
+    #     newsapi = NewsApiClient(api_key=get_news_api_key())
+
+    # @Command("newsinfo", help="A bit of info about the news command.", cooldown=3600)
+    # async def cmd_newsinfo(msg: Message):
+    #     message1 = "Chatting The #news command is currently restricted right now while it's being worked on. I need to finish writing the code that stops people abusing the command."
+    #     message2 = "Chatting When the command is opened up for everyone to use, you can expect three things. 1) It will have a cooldown to prevent spam. 2) It does automatically remove #news perms from chatters who repeatedly get the bot timed out."
+    #     message3 = "Chatting 3) This will be a trial run of the command. If it's too spammy, or people are being annoying with it, I'll just remove it. -Dira ppPoof"
+    #     await msg.reply(message1, as_twitch_reply=True)
+    #     await asyncio.sleep(2)
+    #     await msg.reply(message2, as_twitch_reply=True)
+    #     await asyncio.sleep(2)
+    #     await msg.reply(message3, as_twitch_reply=True)
+
     @Command(
         "silentecho",
         permission="admin",
@@ -1578,13 +1595,99 @@ since new scramble round started."
             REPLY_NEXT = msg.content
             logger.info(f"added message to REPLY_NEXT queue: {msg.content}")
 
+    @Command("math", help="If my math is mathing", cooldown=5, permission="mod")
+    async def cmd_math(msg: Message):
+        logger.info(f"{msg.author} ran math command: {msg.content}")
+        try:
+            out = eval(msg.content.strip("#math "))
+            logger.info(f"{msg.author} got output from math command: {out}")
+            if len(str(out)) > 100:
+                out = str(out)[:100]
+                await msg.reply(str(out) + "... (message too long)")
+            else:
+                await msg.reply(out, as_twitch_reply=True)
+        except Exception as e:
+            logger.info(f"{msg.author} got error from math command: {e}")
+            await msg.reply(e, as_twitch_reply=True)
+
+    @Command("wa", help="Wolfram Alpha", cooldown=5)
+    async def cmd_wa(msg: Message):
+        global get_wa_appid     # you need to rewrite the get_secrets scheme
+
+        q = str(msg.content.strip("#wa "))
+        logger.debug(f"{msg.author} ran #wa command with query: {q}")
+
+
+        query_params = {
+            "appid": str(get_wa_appid()),
+            "i": q
+        }
+
+        base = "https://api.wolframalpha.com/v1/result?"
+        url = base + urlencode(query_params)
+        logger.debug(f"wa url: {url}")
+        r = requests.get(url)
+        out = r.content.decode("utf-8")    # hacky lol
+
+        max_length = 200
+        if len(out) > max_length:
+            out = out[:max_length] + "... (too long)"
+
+        banned_words = [
+            "scramble",
+            "unscramble",
+            "<html>",
+            "<head>",
+            "<title>",
+            "stringteplace",
+            "stringtplit",
+            "stringtrim",
+            "stringtrop",
+            "stringtake",
+            "stringjoin",
+            "ynitsed"[::-1],
+            "edyh"[::-1],
+            "namydnac"[::-1]
+        ]
+        emote_responses = [
+                "Weirdge",
+                "PogO",
+                "WeirdChamp",
+                "FeelsWeirdMan",
+                "Awkward",
+                "LookUp",
+                "NOPERS",
+                "SOCIALCREDIT",
+                "smHead",
+                "Susge"
+        ]
+
+        if any([word in q.lower() for word in banned_words]):
+            logger.debug(f"Caught blocked word in #wa query from {msg.author}")
+            logger.debug(f"query: q = {q}")
+            logger.debug(f"output: out = {out}")
+            random_emote = random.choice(emote_responses)
+            await msg.reply(f"[WA] {random_emote} Bad query", as_twitch_reply=True)
+            return
+        if any([word in out.lower() for word in banned_words]):
+            logger.debug(f"Caught blocked word in #wa output from {msg.author}")
+            logger.debug(f"query: q = {q}")
+            logger.debug(f"output: out = {out}")
+            random_emote = random.choice(emote_responses)
+            await msg.reply(f"[WA] {random_emote} Bad output")
+            return
+
+        logger.debug(f"wa command out: {out}")
+        await msg.reply("[WA] " + out, as_twitch_reply=True)
+        
+
 
 if __name__ == "__main__":
     logger.info("Starting bot...")
 
     # BlammoBot().run()
 
-    # add spam checker 
+    # add spam checker
     # terminate blammobot loop when spam checker returns value
     # instantiate SpammoBot simultaneously
 
