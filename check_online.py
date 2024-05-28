@@ -3,6 +3,7 @@ import asyncio
 import sys
 import logging
 import requests
+import json
 
 from utils.secrets import get_oauth, get_client_id, get_client_secret
 from log.loggers.custom_format import CustomFormatter  # for level colors
@@ -23,8 +24,8 @@ stream_handler.setFormatter(CustomFormatter())
 logger.addHandler(file_handler)
 logger.addHandler(stream_handler)
 
-
-ONLINE_SIGNAL_FILE_NAME = "online_signal.txt"
+CONFIG_PATH = "~/blammo-bot/configs/config.json"
+ONLINE_SIGNAL_FILE_NAME = "online_signal"
 CHANNEL_ONLINE_CHECK_NAME = "hasanabi"
 CHANNEL_ONLINE_CHECK_INTERVAL = 40  # changed from 20 to 40 to see if it fixes the "max retries exceeded for url" error
 
@@ -53,6 +54,19 @@ def get_signal_file_name() -> str:
     return ONLINE_SIGNAL_FILE_NAME
 
 
+def get_channel_check_list() -> list:
+    """Get the list of channels in which BlammoBot is active.
+    If a channel goes online, then BlammoBot will go to sleep
+    in that channel.
+
+    Returns:
+        list: list of channels to check online status
+    """
+    with open(CONFIG_PATH, "r") as config_file:
+        config_data = json.load(config_file)
+    return config_data["channels"]
+
+
 def get_channel_name() -> str:
     """Get the name of the channel to check if online
 
@@ -78,7 +92,7 @@ def check_stream_online(
     """Is the stream online?
 
     Args:
-        channel (str, optional): channel to check. Defaults to 'hasanabi'.
+        channels (list): channels to check.
 
     Returns:
         bool: True if stream is online, False if stream is offline
