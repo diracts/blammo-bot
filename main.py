@@ -326,7 +326,7 @@ class BlammoBot(BaseBot):
             ):  # allow 8% error for spelling, punctuation, etc.
                 trivia_started = False
                 await msg.reply(
-                    f'[Trivia] @{msg.author} You answered the question correctly and got 10 points. CrungoSmile The answer was: "{questions[1]}"'
+                    f'[Trivia] @{msg.author} You answered the question correctly and got 10 points. Gayge TeaTime The answer was: "{questions[1]}"'
                 )
                 points.add_points(msg.author, 10)
                 logger.info(f"[Trivia] {msg.author} answered trivia correctly.")
@@ -346,10 +346,10 @@ class BlammoBot(BaseBot):
                 record.write(TRIVIA_QID)
                 TRIVIA_QID = ""
 
-            elif similarity >= 0.85 and len(msg.content) < 250:
+            elif similarity >= 0.75 and len(msg.content) < 250:
                 trivia_started = False
                 await msg.reply(
-                    f'[Trivia] @{msg.author} You answered the question correctly and got 8 points. CrungoComfy The answer was: "{questions[1]}"'
+                    f'[Trivia] @{msg.author} You answered the question correctly and got 8 points. Gayge Clap The answer was: "{questions[1]}"'
                 )
                 points.add_points(msg.author, 8)
                 logger.info(f"[Trivia] {msg.author} answered trivia correctly.")
@@ -385,7 +385,7 @@ class BlammoBot(BaseBot):
                 # logger.debug(f'scramble solution found from {msg.author}')
                 # logger.debug(f'scramble solution: {scramble_word[1]}')
                 await msg.reply(
-                    f'[Scramble] @{msg.author} You answered the question correctly and got 10 points. CrungoSmile The word was " {scramble_word[1]} "'
+                    f'[Scramble] @{msg.author} You answered the question correctly and got 10 points. Transge TeaTime The word was " {scramble_word[1]} "'
                 )
                 points.add_points(msg.author, 10)
 
@@ -472,7 +472,7 @@ class BlammoBot(BaseBot):
 
         questions = trivia.question()
         question, answer, TRIVIA_QID = questions
-        question_stylized = f"Chatting [Trivia] {question} CrungoSmile TeaTime"
+        question_stylized = f"Chatting [Trivia] {question} Gayge HYPERCLAP"
 
         # >>> record section <<<
         record.new(TRIVIA_QID)
@@ -496,7 +496,7 @@ class BlammoBot(BaseBot):
             if t == TRIVIA_TIMEOUT and trivia_started is True:
                 trivia_started = False
                 await msg.reply(
-                    f"[Trivia] No one answered correctly. Crungo The answer was: {questions[1]}"
+                    f"[Trivia] No one answered correctly. Madgay The answer was: {questions[1]}"
                 )
                 # >>> record section <<<
                 record.add_outcome(TRIVIA_QID, "timeout")
@@ -581,7 +581,7 @@ since new scramble round started."
             scramble.get_word()
         )  # tuple of (scrambled word, UNscrambled word)
         scramble_puzzle, scramble_answer, SCRAMBLE_QID = scramble_word
-        puzzle_stylized = f"[Scramble] A scramble game has started. Unscramble the following word to win: {scramble_puzzle} FeelsDankMan TeaTime"
+        puzzle_stylized = f"[Scramble] A scramble game has started. Unscramble the following word to win: {scramble_puzzle} Transge HYPERCLAP"
 
         scramble_question = scramble_puzzle
 
@@ -603,7 +603,7 @@ since new scramble round started."
                 await msg.reply(f"[Scramble] Hint: {hint}")
             if t == SCRAMBLE_TIMEOUT and scramble_started is True:
                 await msg.reply(
-                    f'[Scramble] No one answered correctly. Crungo The word was: " {scramble_answer} "'
+                    f'[Scramble] No one answered correctly. Madgay The word was: " {scramble_answer} "'
                 )
                 # >>> record section <<<
                 record.add_outcome(SCRAMBLE_QID, "timeout")
@@ -762,7 +762,7 @@ since new scramble round started."
         if fmt in ("percent", "points"):
             if wager < 0:
                 await msg.reply(
-                    f"[Roulette] @{msg.author} CrungoSmileGun Wager must be positive."
+                    f"[Roulette] @{msg.author} Madgay Wager must be positive."
                 )
                 return
             if wager == 0:
@@ -780,22 +780,22 @@ since new scramble round started."
             return
         if out == "win":
             await msg.reply(
-                f"[Roulette] @{msg.author} HYPERPOGGER You won {delta} points and now have {new_bal} points."
+                f"[Roulette] @{msg.author} Gayge Clap You won {delta} points and now have {new_bal} points."
             )
             return
         elif out == "lose":
             await msg.reply(
-                f"[Roulette] @{msg.author} CrungoBonk You lost {delta} points and now have {new_bal} points."
+                f"[Roulette] @{msg.author} Sadgay SmokeTime You lost {delta} points and now have {new_bal} points."
             )
             return
         elif out == "not enough points":
             await msg.reply(
-                f"[Roulette] @{msg.author} CrungoSmileGun You don't have enough points for that. Get your money up."
+                f"[Roulette] @{msg.author} Sadgay You don't have enough points for that. Get your money up."
             )
             return
         elif out == "no points":
             await msg.reply(
-                f"[Roulette] @{msg.author} Crungo You don't have any points."
+                f"[Roulette] @{msg.author} Madgay You don't have any points."
             )
 
     @Command(
@@ -844,7 +844,7 @@ since new scramble round started."
         # check if the msg.author has enough points
         if points.get_points(sender) < transfer_amount:
             await msg.reply(
-                f"@{msg.author} CrungoSmileGun You can't give more points than you have."
+                f"@{msg.author} Madgay You can't give more points than you have."
             )
             return
 
@@ -856,7 +856,7 @@ since new scramble round started."
             return
         elif outcome == "not enough points":
             await msg.reply(
-                f"@{msg.author} CrungoSmileGun You can't give more points than you have."
+                f"@{msg.author} Madgay You can't give more points than you have."
             )
             return
         elif outcome == "invalid amount":
@@ -1612,22 +1612,18 @@ since new scramble round started."
 
     @Command("wa", help="Wolfram Alpha", cooldown=5)
     async def cmd_wa(msg: Message):
-        global get_wa_appid     # you need to rewrite the get_secrets scheme
+        global get_wa_appid  # you need to rewrite the get_secrets scheme
 
         q = str(msg.content.strip("#wa "))
         logger.debug(f"{msg.author} ran #wa command with query: {q}")
 
-
-        query_params = {
-            "appid": str(get_wa_appid()),
-            "i": q
-        }
+        query_params = {"appid": str(get_wa_appid()), "i": q}
 
         base = "https://api.wolframalpha.com/v1/result?"
         url = base + urlencode(query_params)
         logger.debug(f"wa url: {url}")
         r = requests.get(url)
-        out = r.content.decode("utf-8")    # hacky lol
+        out = r.content.decode("utf-8")  # hacky lol
 
         max_length = 200
         if len(out) > max_length:
@@ -1647,19 +1643,19 @@ since new scramble round started."
             "stringjoin",
             "ynitsed"[::-1],
             "edyh"[::-1],
-            "namydnac"[::-1]
+            "namydnac"[::-1],
         ]
         emote_responses = [
-                "Weirdge",
-                "PogO",
-                "WeirdChamp",
-                "FeelsWeirdMan",
-                "Awkward",
-                "LookUp",
-                "NOPERS",
-                "SOCIALCREDIT",
-                "smHead",
-                "Susge"
+            "Weirdge",
+            "PogO",
+            "WeirdChamp",
+            "FeelsWeirdMan",
+            "Awkward",
+            "LookUp",
+            "NOPERS",
+            "SOCIALCREDIT",
+            "smHead",
+            "Susge",
         ]
 
         if any([word in q.lower() for word in banned_words]):
@@ -1679,7 +1675,6 @@ since new scramble round started."
 
         logger.debug(f"wa command out: {out}")
         await msg.reply("[WA] " + out, as_twitch_reply=True)
-        
 
 
 if __name__ == "__main__":
