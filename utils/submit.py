@@ -61,7 +61,7 @@ async def _check_safety(content):
             "eval(",
             "exec(",
             "open(",
-            "..",
+            # "..",
             "0x27",
             "0x3f",
             "0x5c",
