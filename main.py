@@ -369,7 +369,7 @@ class BlammoBot(BaseBot):
                 record.write(TRIVIA_QID)
                 TRIVIA_QID = ""
 
-            elif similarity >= 0.75 and len(msg.content) < 250:
+            elif similarity >= 0.82 and len(msg.content) < 250:
                 await msg.reply(
                     f"[Trivia] @{msg.author} {msg.content} is close. [Similarity {100*similarity:.0f}%]"
                 )
