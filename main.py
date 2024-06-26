@@ -326,7 +326,7 @@ class BlammoBot(BaseBot):
             ):  # allow 8% error for spelling, punctuation, etc.
                 trivia_started = False
                 await msg.reply(
-                    f'[Trivia] @{msg.author} You answered the question correctly and got 10 points. Gayge TeaTime The answer was: "{questions[1]}"'
+                    f'[Trivia] @{msg.author} You answered the question correctly and got 10 points. Gayge TeaTime The answer was: "{questions[1]}" [similarity={round(100*similarity, 3)}%]'
                 )
                 points.add_points(msg.author, 10)
                 logger.info(f"[Trivia] {msg.author} answered trivia correctly.")
@@ -349,7 +349,7 @@ class BlammoBot(BaseBot):
             elif similarity >= 0.75 and len(msg.content) < 250:
                 trivia_started = False
                 await msg.reply(
-                    f'[Trivia] @{msg.author} You answered the question correctly and got 8 points. Gayge Clap The answer was: "{questions[1]}"'
+                    f'[Trivia] @{msg.author} You answered the question correctly and got 8 points. Gayge Clap The answer was: "{questions[1]}" [similarity={round(100*similarity, 3)}%]'
                 )
                 points.add_points(msg.author, 8)
                 logger.info(f"[Trivia] {msg.author} answered trivia correctly.")
