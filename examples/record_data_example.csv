@@ -1,0 +1,6 @@
+timestamp,qid,game_type,outcome,time_elapsed,username,points_awarded,guess_string,guess_similarity,question_string,answer_string
+1654387200.5,t1234567890,trivia,solved,15.5,testuser1,10,paris,1.0,What is the capital of France?,Paris
+1654387215.3,s2345678901,scramble,solved,12.3,testuser2,15,computer,1.0,COMPUTER,computer
+1654387230.7,t3456789012,trivia,solved,8.7,testuser3,5,4,1.0,What is 2 + 2?,4
+1654387245.0,t4567890123,trivia,timeout,25.0,testuser4,0,,-1,What planet is closest to the sun?,Mercury
+1654387260.2,s5678901234,scramble,solved,18.2,testuser1,20,keyboard,1.0,KEYBOARD,keyboard
