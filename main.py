@@ -15,7 +15,7 @@ from urllib.parse import urlencode, urlparse, urlunparse, urljoin
 from pathlib import Path
 from twitchbot import BaseBot
 from twitchbot import event_handler, Event, Command, Message, Channel, PollData, get_bot
-from twitchbot.config import get_nick, get_oauth, get_client_id, get_client_secret
+from twitchbot.config import get_nick, get_oauth, get_client_id
 
 # from newsapi import NewsApiClient
 
