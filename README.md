@@ -60,7 +60,7 @@ Careful treatment must be given to questions involving some detail that is attac
 
 ### British Spelling
 
-U.S. English spelling is to be used over British spelling except in proper nouns, titles of works, or instances where distinction is needed. No aluminium, colour, and massacre. 
+U.S. English spelling is to be used over British spelling except in proper nouns, titles of works, or instances where distinction is needed. No aluminium, colour, or licence. 
 
 ## FAQs
 
