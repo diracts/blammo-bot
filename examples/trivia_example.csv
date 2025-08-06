@@ -1,0 +1,11 @@
+question,correct_answer,enabled,qid
+What is the capital of France?,Paris,TRUE,T0001
+In what year did World War II end?,1945,TRUE,T0002
+What is the largest planet in our solar system?,Jupiter,TRUE,T0003
+Who painted the Mona Lisa?,Leonardo da Vinci,TRUE,T0004
+What is the chemical symbol for gold?,Au,TRUE,T0005
+How many continents are there?,7,TRUE,T0006
+What is the smallest country in the world?,Vatican City,TRUE,T0007
+Who wrote Romeo and Juliet?,William Shakespeare,TRUE,T0008
+What is the speed of light in vacuum?,299792458 m/s,TRUE,T0009
+What is the currency of Japan?,Yen,TRUE,T0010
